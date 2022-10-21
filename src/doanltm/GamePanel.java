@@ -40,7 +40,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
     private int currentID = 0;
     private Random rand;
     private Color[] colors = {Color.GREEN, Color.BLUE, Color.RED, Color.MAGENTA, Color.ORANGE};
-    
+
     Double zoomFactor = 1.0d;
     boolean zoomer;
     AffineTransform at;
@@ -49,7 +49,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
 
         this.setPreferredSize(new Dimension(panelWidth, panelHeight));
         this.setDoubleBuffered(true);
-        this.setBackground(Color.gray);
+        this.setBackground(Color.LIGHT_GRAY);
         this.setFocusable(true);
         this.addMouseListener(this);
         this.addMouseWheelListener(this);
@@ -72,7 +72,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
 
             map[mRow][mCol] = 1;
 
-            Num n = new Num(i, "" + (i + 1), mRow, mCol, rand.nextInt(tileSize - originalTileSize), rand.nextInt(tileSize - originalTileSize), originalTileSize+10, originalTileSize+10, getRandomColor(), tileSize);
+            Num n = new Num(i, "" + (i + 1), mRow, mCol, rand.nextInt(tileSize - originalTileSize), rand.nextInt(tileSize - originalTileSize), originalTileSize + 10, originalTileSize + 10, getRandomColor(), tileSize);
             numbers.add(n);
 
         }
@@ -90,7 +90,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
             //zoomer = false;
             g2.transform(at);
         }
-        g2.setFont(new Font("MV Boli", Font.BOLD, 10));
+        g2.setFont(new Font("MV Boli", Font.BOLD, 15));
         FontMetrics metrics = getFontMetrics(g.getFont());
 
 //        for (int i = 0; i < col; i++) {
@@ -108,22 +108,23 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
         for (Num n : numbers) {
             g2.setColor(n.getColor());
             if (n.isFill()) {
-                g2.fillRect(n.getX(), n.getY(), n.getWidth(), n.getHeight());
+                g2.fillRoundRect(n.getX(), n.getY(), n.getWidth(), n.getHeight(), 10, 10);
             } else {
-                g2.drawRect(n.getX(), n.getY(), n.getWidth(), n.getHeight());
+                g2.drawRoundRect(n.getX(), n.getY(), n.getWidth(), n.getHeight(), 10, 10);
             }
             g2.drawString(n.getName(), n.getX() + (n.getWidth() - metrics.stringWidth(n.getName())) / 2, n.getY() + n.getHeight() / 2 + metrics.getHeight() / 4);
-
         }
+
+        g2.setFont(new Font("Times New Roman", Font.BOLD, 20));
         g2.setColor(Color.green);
+        
         g2.drawString(mainFrame.FPScount, 0, tileSize / 2);
 
         g2.drawString("" + mainFrame.delta, tileSize, tileSize / 2);
-        
-        g2.drawString("" + currentID, panelWidth/2, tileSize / 2);
-        
+
+        g2.drawString("" + currentID, panelWidth / 2, tileSize / 2);
+
         g2.dispose();
-        
 
     }
 
