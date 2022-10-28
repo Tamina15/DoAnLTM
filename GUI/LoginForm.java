@@ -1,6 +1,5 @@
 package GUI;
 
-
 import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -23,8 +22,9 @@ import java.awt.event.MouseMotionAdapter;
 import javax.swing.JTextField;
 
 import javax.swing.border.MatteBorder;
-import javax.swing.JPasswordField;
 
+
+import javax.swing.JPasswordField;
 
 public class LoginForm extends JFrame {
 	int posX, posY;
@@ -40,7 +40,6 @@ public class LoginForm extends JFrame {
 	private JLabel lbl_IconDeliveryman;
 	private JButton btnLogin;
 	private JTextField txt_username;
-
 
 	public LoginForm() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -156,14 +155,14 @@ public class LoginForm extends JFrame {
 
 		lbl_IconDeliveryman = new JLabel("");
 		lbl_IconDeliveryman.setHorizontalAlignment(SwingConstants.LEFT);
-		lbl_IconDeliveryman.setIcon(new ImageIcon(LoginForm.class.getResource("/images/png.png")));
+		lbl_IconDeliveryman.setIcon(new ImageIcon(LoginForm.class.getResource("/images/logo.png")));
 		lbl_IconDeliveryman.setBounds(-52, 11, 346, 328);
 		pnLogo.add(lbl_IconDeliveryman);
 		widthLeft = (int) pnLogo.getPreferredSize().getWidth();
 
 	}
 
-	//Event 
+	// Event
 	public void addEvents() {
 		lblClose.addMouseListener(new MouseAdapter() {
 
@@ -214,6 +213,15 @@ public class LoginForm extends JFrame {
 		});
 
 		// Login
+		
+		btnLogin.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String username = txt_username.getText();
+				String password = String.valueOf(txt_pass.getPassword());
+				loadHomeForm();
+			}
+		});
 	}
 
 	public void moveWindow(int positionX, int positionY) {
@@ -223,9 +231,13 @@ public class LoginForm extends JFrame {
 	public void closeThisWindow() {
 		this.dispose();
 	}
-
-
-	// public 
+	
+	 public void loadHomeForm() {
+		 HomeForm homeForm = new HomeForm();
+		 homeForm.setVisible(true);
+		 closeThisWindow();
+	 }
+	// public
 
 	public static void main(String[] args) {
 		LoginForm login = new LoginForm();
