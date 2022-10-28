@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.Client;
+package Client;
 
+import Server.Server;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -35,18 +36,17 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
     public final int panelWidth = tileSize * col;
     public final int panelHeight = tileSize * row;
 
-    private ArrayList<Num> numbers = new ArrayList<>();
+    private final ArrayList<Num> numbers = new ArrayList<>();
     private int amount = 60;
-    private int currentID = 0;
-    private Random rand;
-    private Color[] colors = {Color.GREEN, Color.BLUE, Color.RED, Color.MAGENTA, Color.ORANGE};
+    private final Random rand;
+    private final Color[] colors = {Color.GREEN, Color.BLUE, Color.RED, Color.MAGENTA, Color.ORANGE};
 
     Double zoomFactor = 1.0d;
     boolean zoomer;
     AffineTransform at;
 
     public GamePanel() {
-
+Server.RandomizeArray();
         this.setPreferredSize(new Dimension(panelWidth, panelHeight));
         this.setDoubleBuffered(true);
         this.setBackground(Color.LIGHT_GRAY);
@@ -122,7 +122,7 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
 
         g2.drawString("" + mainFrame.delta, tileSize, tileSize / 2);
 
-        g2.drawString("" + currentID, panelWidth / 2, tileSize / 2);
+        g2.drawString("" + Server.currentNumber, panelWidth / 2, tileSize / 2);
 
         g2.dispose();
 
@@ -140,9 +140,9 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
     public void checkCollision(int x, int y) {
         for (Num n : numbers) {
             if (n.getHitbox().contains(x, y)) {
-                if (n.getId() == currentID) {
+                if (n.getId() == Server.currentNumber) {
                     n.setFill(true);
-                    currentID++;
+                    Server.NextNumber();
                 }
             }
         }
@@ -151,7 +151,6 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
     protected Color getRandomColor() {
         return colors[rand.nextInt(colors.length)];
     }
-
     @Override
     public void mouseClicked(MouseEvent e) {
         int x = e.getX();
