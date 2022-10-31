@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.Client;
+package Client;
 
 import java.awt.Color;
 import java.awt.Rectangle;
@@ -12,7 +12,7 @@ import java.awt.Rectangle;
  *
  * @author Tran Minh Nhat
  */
-public class Num {
+public class Number {
 
     private String name;
     private Rectangle hitbox;
@@ -21,10 +21,10 @@ public class Num {
     private boolean hit, fill;
     private Color color;
 
-    public Num() {
+    public Number() {
     }
 
-    public Num(int id, String name, int row, int col, int tileX, int tileY, int width, int height, Color color, int tileSize) {
+    public Number(int id, String name, int row, int col, int tileX, int tileY, int width, int height, Color color, int tileSize) {
         this.id = id;
         this.name = name;
         this.x = col * tileSize + tileX;

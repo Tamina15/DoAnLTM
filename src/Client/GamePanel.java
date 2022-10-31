@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.Client;
+package Client;
 
+import Server.Server;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -35,11 +36,10 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
     public final int panelWidth = tileSize * col;
     public final int panelHeight = tileSize * row;
 
-    private ArrayList<Num> numbers = new ArrayList<>();
-    private int amount = 60;
-    private int currentID = 0;
-    private Random rand;
-    private Color[] colors = {Color.GREEN, Color.BLUE, Color.RED, Color.MAGENTA, Color.ORANGE};
+    private final ArrayList<Number> numbers = new ArrayList<>();
+    private int amount = 100;
+    private final Random rand;
+    private final Color[] colors = {Color.GREEN, Color.BLUE, Color.RED, Color.MAGENTA, Color.ORANGE};
 
     Double zoomFactor = 1.0d;
     boolean zoomer;
@@ -47,9 +47,11 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
 
     public GamePanel() {
 
+        Server.RandomizeArray();
+
         this.setPreferredSize(new Dimension(panelWidth, panelHeight));
         this.setDoubleBuffered(true);
-        this.setBackground(Color.LIGHT_GRAY);
+        this.setBackground(Color.BLACK);
         this.setFocusable(true);
         this.addMouseListener(this);
         this.addMouseWheelListener(this);
@@ -72,11 +74,12 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
 
             map[mRow][mCol] = 1;
 
-            Num n = new Num(i, "" + (i + 1), mRow, mCol, rand.nextInt(tileSize - originalTileSize), rand.nextInt(tileSize - originalTileSize), originalTileSize + 10, originalTileSize + 10, getRandomColor(), tileSize);
+            Number n = new Number(i, "" + (i + 1), mRow, mCol, rand.nextInt(tileSize - originalTileSize), rand.nextInt(tileSize - originalTileSize), originalTileSize + 10, originalTileSize + 10, getRandomColor(), tileSize);
             numbers.add(n);
 
         }
     }
+    int arc = 1;
 
     @Override
     public void paintComponent(Graphics g) {
@@ -105,11 +108,14 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
             g2.dispose();
             return;
         }
-        for (Num n : numbers) {
+        for (Number n : numbers) {
             g2.setColor(n.getColor());
             if (n.isFill()) {
                 g2.fillRoundRect(n.getX(), n.getY(), n.getWidth(), n.getHeight(), 10, 10);
             } else {
+                if (Integer.parseInt(n.getName()) == Server.currentNumber + 1) {
+                    g2.drawOval(n.getX() - arc / 2, n.getY() - arc / 2, n.getWidth() + arc, n.getHeight() + arc);
+                }
                 g2.drawRoundRect(n.getX(), n.getY(), n.getWidth(), n.getHeight(), 10, 10);
             }
             g2.drawString(n.getName(), n.getX() + (n.getWidth() - metrics.stringWidth(n.getName())) / 2, n.getY() + n.getHeight() / 2 + metrics.getHeight() / 4);
@@ -117,19 +123,19 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
 
         g2.setFont(new Font("Times New Roman", Font.BOLD, 20));
         g2.setColor(Color.green);
-        
+
         g2.drawString(mainFrame.FPScount, 0, tileSize / 2);
 
         g2.drawString("" + mainFrame.delta, tileSize, tileSize / 2);
 
-        g2.drawString("" + currentID, panelWidth / 2, tileSize / 2);
+        g2.drawString("" + (Server.currentNumber + 1), panelWidth / 2, tileSize / 2);
 
         g2.dispose();
-
+        arc = (arc + 1) % 20;
     }
 
     public boolean update() {
-        for (Num n : numbers) {
+        for (Number n : numbers) {
             if (!n.isFill()) {
                 return false;
             }
@@ -138,11 +144,12 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
     }
 
     public void checkCollision(int x, int y) {
-        for (Num n : numbers) {
+        for (Number n : numbers) {
             if (n.getHitbox().contains(x, y)) {
-                if (n.getId() == currentID) {
+                if (n.getId() == Server.currentNumber) {
                     n.setFill(true);
-                    currentID++;
+                    Server.NextNumber();
+                    arc = 0;
                 }
             }
         }
