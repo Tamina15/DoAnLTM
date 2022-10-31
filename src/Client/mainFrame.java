@@ -5,8 +5,13 @@
  */
 package Client;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Container;
+import java.awt.GridLayout;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 
 /**
  *
@@ -15,6 +20,7 @@ import javax.swing.JFrame;
 public class mainFrame extends JFrame implements Runnable {
 
     GamePanel gamePanel;
+    PointPanel pointPanel;
     Thread thread;
     public final int FPS = 60;
     public static String FPScount = "NaN";
@@ -22,15 +28,23 @@ public class mainFrame extends JFrame implements Runnable {
     public static double delta = 0;
 
     mainFrame() {
-        JFrame frame = new JFrame();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        Container c = this.getContentPane();
+        
         gamePanel = new GamePanel();
-        frame.add(gamePanel);
-        frame.pack();
-        frame.setResizable(false);
-        frame.setLocationRelativeTo(null);
-        frame.setBackground(Color.black);
-        frame.setVisible(true);
+        pointPanel = new PointPanel();
+
+        getContentPane().setLayout(new BorderLayout());
+
+        c.add(pointPanel, BorderLayout.NORTH);
+        c.add(gamePanel, BorderLayout.CENTER);
+        
+        this.pack();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setBackground(Color.black);
+        this.setVisible(true);
+
         newThread();
     }
 
@@ -40,7 +54,7 @@ public class mainFrame extends JFrame implements Runnable {
     }
 
     public static void main(String[] args) {
-        new mainFrame();
+        mainFrame mainFrame = new mainFrame();
     }
 
     @Override

@@ -6,6 +6,7 @@
 package Client;
 
 import Server.Server;
+import static Utils.Constant.*;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -28,16 +29,8 @@ import javax.swing.JPanel;
  */
 public class GamePanel extends JPanel implements MouseListener, MouseWheelListener {
 
-    public final int originalTileSize = 16;
-    public final int scale = 4;
-    public final int tileSize = originalTileSize * scale;
-    public final int col = 20;
-    public final int row = 10;
-    public final int panelWidth = tileSize * col;
-    public final int panelHeight = tileSize * row;
-
     private final ArrayList<Number> numbers = new ArrayList<>();
-    private int amount = 100;
+
     private final Random rand;
     private final Color[] colors = {Color.GREEN, Color.BLUE, Color.RED, Color.MAGENTA, Color.ORANGE};
 
@@ -48,8 +41,8 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
     public GamePanel() {
 
         Server.RandomizeArray();
-
-        this.setPreferredSize(new Dimension(panelWidth, panelHeight));
+//        this.setBounds(0, 0, PANEL_WIDTH, PANEL_HEIGHT);
+        this.setPreferredSize(new Dimension(PANEL_WIDTH, PANEL_HEIGHT));
         this.setDoubleBuffered(true);
         this.setBackground(Color.BLACK);
         this.setFocusable(true);
@@ -58,23 +51,20 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
 
         rand = new Random();
 
-        int map[][] = new int[row][col];
-        if (amount > col * row) {
-            amount = col * row;
-        }
-        for (int i = 0; i < amount; i++) {
+        int map[][] = new int[ROW][COLUMN];
+        for (int i = 0; i < NUMBER_AMOUNT; i++) {
 
-            int mRow = rand.nextInt(row);
-            int mCol = rand.nextInt(col);
+            int mRow = rand.nextInt(ROW);
+            int mCol = rand.nextInt(COLUMN);
 
             while (map[mRow][mCol] == 1) {
-                mRow = rand.nextInt(row);
-                mCol = rand.nextInt(col);
+                mRow = rand.nextInt(ROW);
+                mCol = rand.nextInt(COLUMN);
             }
 
             map[mRow][mCol] = 1;
 
-            Number n = new Number(i, "" + (i + 1), mRow, mCol, rand.nextInt(tileSize - originalTileSize), rand.nextInt(tileSize - originalTileSize), originalTileSize + 10, originalTileSize + 10, getRandomColor(), tileSize);
+            Number n = new Number(i, "" + (i + 1), mRow, mCol, rand.nextInt(TILE_SIZE - ORIGINAL_TILE_SIZE), rand.nextInt(TILE_SIZE - ORIGINAL_TILE_SIZE), ORIGINAL_TILE_SIZE + 10, ORIGINAL_TILE_SIZE + 10, getRandomColor(), TILE_SIZE);
             numbers.add(n);
 
         }
@@ -93,21 +83,22 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
             //zoomer = false;
             g2.transform(at);
         }
-        g2.setFont(new Font("MV Boli", Font.BOLD, 15));
-        FontMetrics metrics = getFontMetrics(g.getFont());
 
-//        for (int i = 0; i < col; i++) {
-//            g2.drawLine(i * tileSize, 0, i * tileSize, panelHeight);
-//        }
-//        for (int i = 0; i < row; i++) {
-//            g2.drawLine(0, i * tileSize, panelWidth, i * tileSize);
-//        }
         if (update()) {
             g2.setColor(Color.green);
-            g2.drawString("Game Over", 0, tileSize / 2);
+            g2.drawString("Game Over", 0, TILE_SIZE / 2);
             g2.dispose();
             return;
         }
+
+//        for (int i = 0; i < COLUMN; i++) {
+//            g2.drawLine(i * TILE_SIZE, 0, i * TILE_SIZE, panelHeight);
+//        }
+//        for (int i = 0; i < ROW; i++) {
+//            g2.drawLine(0, i * TILE_SIZE, panelWidth, i * TILE_SIZE);
+//        }
+        g2.setFont(new Font("MV Boli", Font.BOLD, 15));
+        FontMetrics metrics = getFontMetrics(g.getFont());
         for (Number n : numbers) {
             g2.setColor(n.getColor());
             if (n.isFill()) {
@@ -123,15 +114,13 @@ public class GamePanel extends JPanel implements MouseListener, MouseWheelListen
 
         g2.setFont(new Font("Times New Roman", Font.BOLD, 20));
         g2.setColor(Color.green);
+        g2.drawString(mainFrame.FPScount, 0, TILE_SIZE / 2);
+        g2.drawString("" + mainFrame.delta, TILE_SIZE, TILE_SIZE / 2);
+        g2.setColor(Color.white);
+        g2.drawString("" + (Server.currentNumber + 1), PANEL_WIDTH / 2, TILE_SIZE);
 
-        g2.drawString(mainFrame.FPScount, 0, tileSize / 2);
-
-        g2.drawString("" + mainFrame.delta, tileSize, tileSize / 2);
-
-        g2.drawString("" + (Server.currentNumber + 1), panelWidth / 2, tileSize / 2);
-
-        g2.dispose();
         arc = (arc + 1) % 20;
+        g2.dispose();
     }
 
     public boolean update() {
