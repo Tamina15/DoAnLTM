@@ -18,5 +18,5 @@ public class Constant {
     public static final int ROW = 10;
     public static final int PANEL_WIDTH = TILE_SIZE * COLUMN;
     public static final int PANEL_HEIGHT = TILE_SIZE * ROW;
-    public static int NUMBER_AMOUNT = 100;
+    public static final int NUMBER_AMOUNT = (ROW * COLUMN > 100) ? 100 : ROW * COLUMN;
 }
