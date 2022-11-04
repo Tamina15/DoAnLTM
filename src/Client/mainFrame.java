@@ -8,10 +8,7 @@ package Client;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
-import java.awt.GridLayout;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.JSplitPane;
 
 /**
  *
@@ -40,7 +37,7 @@ public class mainFrame extends JFrame implements Runnable {
         c.add(gamePanel, BorderLayout.CENTER);
         
         this.pack();
-        this.setResizable(false);
+       // this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setBackground(Color.black);
         this.setVisible(true);
@@ -48,7 +45,7 @@ public class mainFrame extends JFrame implements Runnable {
         newThread();
     }
 
-    public void newThread() {
+    public final void newThread() {
         thread = new Thread(this);
         thread.start();
     }
@@ -70,6 +67,7 @@ public class mainFrame extends JFrame implements Runnable {
             lastTime = currentTime;
             if (delta >= 1) {
                 gamePanel.repaint();
+                pointPanel.update();
                 delta--;
                 count++;
             }

@@ -14,7 +14,6 @@ import java.awt.Rectangle;
  */
 public class Number {
 
-    private String name;
     private Rectangle hitbox;
     private int id, x, y, width, height;
     private int row, col;
@@ -24,9 +23,8 @@ public class Number {
     public Number() {
     }
 
-    public Number(int id, String name, int row, int col, int tileX, int tileY, int width, int height, Color color, int tileSize) {
+    public Number(int id, int row, int col, int tileX, int tileY, int width, int height, Color color, int tileSize) {
         this.id = id;
-        this.name = name;
         this.x = col * tileSize + tileX;
         this.y = row * tileSize + tileY;
         this.width = width;
@@ -36,7 +34,7 @@ public class Number {
         this.hit = false;
         this.fill = false;
         this.color = color;
-        this.hitbox = newHitbox();
+        this.hitbox = new Rectangle(x, y, width, height);
 
     }
 
@@ -50,10 +48,6 @@ public class Number {
 
     public void setHitbox(Rectangle hitbox) {
         this.hitbox = hitbox;
-    }
-
-    public Rectangle newHitbox() {
-        return hitbox = new Rectangle(x, y, width, height);
     }
 
     public int getX() {
@@ -134,14 +128,6 @@ public class Number {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
 }
