@@ -5,24 +5,17 @@
  */
 package src.Server;
 
-<<<<<<< HEAD
 import static src.Utils.Constant.NUMBER_AMOUNT;
-=======
-import static Utils.Constant.NUMBER_AMOUNT;
-import static Utils.Constant.PORT;
+import static src.Utils.Constant.NUMBER_AMOUNT;
+import static src.Utils.Constant.PORT;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
->>>>>>> 10f12d0a133ec9ac0b202e4eca74734cd08770d3
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Tran Minh Nhat
- */
 public class Server {
 
     DatagramSocket socket;

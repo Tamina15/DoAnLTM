@@ -3,12 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-<<<<<<< HEAD
-package src.Client;
-=======
-package Client;
 
-import static Utils.Constant.PORT;
+package src.Client;
+
+import static src.Utils.Constant.PORT;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -19,11 +17,6 @@ import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
->>>>>>> 10f12d0a133ec9ac0b202e4eca74734cd08770d3
-/**
- *
- * @author Tran Minh Nhat
- */
 public class Client {
 
     InetAddress address;
