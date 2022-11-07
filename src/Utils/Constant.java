@@ -20,4 +20,7 @@ public class Constant {
     public static final int ROW = 10;
     public static final int PANEL_WIDTH = TILE_SIZE * COLUMN;
     public static final int PANEL_HEIGHT = TILE_SIZE * ROW;
+    
+    public static final int PORT = 5555;
+    
 }
