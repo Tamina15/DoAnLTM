@@ -5,6 +5,8 @@
  */
 package src.Client;
 
+import src.DTO.Number;
+import src.GUI.mainFrame;
 import src.Server.Server;
 import static src.Utils.Constant.*;
 import java.awt.BasicStroke;

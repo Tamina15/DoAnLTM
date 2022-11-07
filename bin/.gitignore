@@ -1,4 +1,10 @@
 /build/
 /dist/
-/src/
-/nbproject/
+/.classpath
+/.gitattributes
+/.project
+/.settings/
+/README.md
+/build.xml
+/manifest.mf
+/mysql-connector-java-8.0.23.jar
