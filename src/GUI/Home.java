@@ -1,4 +1,4 @@
-package GUI;
+package src.GUI;
 
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -20,7 +20,7 @@ import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import GUI.LoginForm;
+import src.GUI.LoginForm;
 
 public class Home extends JFrame {
 

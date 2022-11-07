@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Client;
+package src.Client;
 
-import Server.Server;
-import static Utils.Constant.*;
+import src.Server.Server;
+import static src.Utils.Constant.*;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;

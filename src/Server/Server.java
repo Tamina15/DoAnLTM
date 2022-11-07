@@ -3,9 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Server;
+package src.Server;
 
-import static Utils.Constant.NUMBER_AMOUNT;
+import static src.Utils.Constant.NUMBER_AMOUNT;
 import java.util.Random;
 
 /**
