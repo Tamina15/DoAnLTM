@@ -57,7 +57,6 @@ public class Client {
                 socket.send(sendPacket);
 
                 if (string.equals("bye") || socket.isConnected()) {
-
                     break;
                 }
 

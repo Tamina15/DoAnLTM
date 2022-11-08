@@ -3,16 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.Client;
+package Client;
 
-import src.Server.Server;
-import static src.Utils.Constant.*;
+import Server.Server;
+import static Utils.Constant.PANEL_WIDTH;
+import static Utils.Constant.TILE_SIZE;
+import static Utils.Constant.PAUSE;
+import static Utils.Constant.Pause;
+import static Utils.Constant.UnPause;
+
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.Image;
+
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -48,12 +57,34 @@ public class PointPanel extends JPanel {
         time = new JLabel();
         player1 = new JLabel();
         player2 = new JLabel();
-        this.setLayout(new FlowLayout(1, 20, 10));
+        this.setLayout(new FlowLayout(1, 50, 10));
 
         ImageIcon imageIcon = new ImageIcon(new ImageIcon(PointPanel.class.getResource("/images/pause.png")).getImage());
         pause.setIcon(imageIcon);
         pause.setBackground(background);
         pause.setBorderPainted(false);
+        pause.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                PAUSE = !PAUSE;
+            }
+
+            @Override
+            public void mousePressed(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+            }
+        });
 
         imageIcon = new ImageIcon(new ImageIcon(PointPanel.class.getResource("/images/volume.png")).getImage().getScaledInstance(40, 40, Image.SCALE_DEFAULT));
         sound.setIcon(imageIcon);
@@ -65,7 +96,7 @@ public class PointPanel extends JPanel {
         number.setForeground(Color.WHITE);
         number.setFont(new Font("Times New Roman", Font.BOLD, 20));
         number.setBackground(background);
-        
+
         player1.setForeground(Color.GREEN);
         player1.setText("Player 1: ");
         player2.setText("Player 2: ");

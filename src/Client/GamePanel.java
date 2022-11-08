@@ -83,6 +83,12 @@ public class GamePanel extends JPanel {
 //            //zoomer = false;
 //            g2.transform(at);
 //        }
+//        if (PAUSE) {
+//            this.setEnabled(false);
+//            return;
+//        }else {
+//            this.setEnabled(true);
+//        }
         if (isEndgame()) {
             g2.setColor(Color.green);
             g2.drawString("Game Over", 0, TILE_SIZE / 2);
@@ -118,10 +124,6 @@ public class GamePanel extends JPanel {
         g2.drawString(mainFrame.FPScount, 0, TILE_SIZE / 2);
         g2.drawString("" + mainFrame.delta, TILE_SIZE, TILE_SIZE / 2);
 
-        g2.setColor(Color.white);
-
-        g2.drawString("" + (Server.currentNumber + 1), PANEL_WIDTH / 2, TILE_SIZE);
-
         arc = (arc + 1) % 20;
 
         g2.dispose();
@@ -137,12 +139,14 @@ public class GamePanel extends JPanel {
     }
 
     public void checkCollision(int x, int y) {
-        for (Number n : numbers) {
-            if (n.getHitbox().contains(x, y)) {
-                if (n.getId() == Server.currentNumber) {
-                    n.setFill(true);
-                    Server.NextNumber();
-                    arc = 0;
+        if (!PAUSE) {
+            for (Number n : numbers) {
+                if (n.getHitbox().contains(x, y)) {
+                    if (n.getId() == Server.currentNumber) {
+                        n.setFill(true);
+                        Server.NextNumber();
+                        arc = 0;
+                    }
                 }
             }
         }
@@ -166,7 +170,6 @@ public class GamePanel extends JPanel {
             int x = e.getX();
             int y = e.getY();
             checkCollision(x, y);
-
         }
 
         @Override

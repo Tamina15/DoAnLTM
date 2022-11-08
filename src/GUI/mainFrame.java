@@ -7,11 +7,11 @@ package GUI;
 
 import Client.GamePanel;
 import Client.PointPanel;
+import static Utils.Constant.PAUSE;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import javax.swing.JFrame;
-
 
 /**
  *
@@ -30,7 +30,7 @@ public class mainFrame extends JFrame implements Runnable {
     mainFrame() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         Container c = this.getContentPane();
-        
+
         gamePanel = new GamePanel();
         pointPanel = new PointPanel();
 
@@ -38,9 +38,9 @@ public class mainFrame extends JFrame implements Runnable {
 
         c.add(pointPanel, BorderLayout.NORTH);
         c.add(gamePanel, BorderLayout.CENTER);
-        
+
         this.pack();
-       // this.setResizable(false);
+        // this.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setBackground(Color.black);
         this.setVisible(true);
@@ -69,8 +69,10 @@ public class mainFrame extends JFrame implements Runnable {
             timer += (currentTime - lastTime);
             lastTime = currentTime;
             if (delta >= 1) {
-                gamePanel.repaint();
-                pointPanel.update();
+                if (!PAUSE) {
+                    gamePanel.repaint();
+                    pointPanel.update();
+                }
                 delta--;
                 count++;
             }

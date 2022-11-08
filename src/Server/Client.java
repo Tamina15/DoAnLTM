@@ -1,23 +1,16 @@
-package src.Server;
+package Server;
 
 //import com.sun.org.apache.xerces.internal.impl.dv.util.Base64;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.security.*;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
-import java.util.Scanner;
-import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
-import javax.crypto.spec.SecretKeySpec;
 
 public class Client {
     private Socket socket = null; 
