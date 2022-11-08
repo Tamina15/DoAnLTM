@@ -3,11 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.Server;
+package Server;
 
-import static src.Utils.Constant.NUMBER_AMOUNT;
-import static src.Utils.Constant.NUMBER_AMOUNT;
-import static src.Utils.Constant.PORT;
+import static Utils.Constant.NUMBER_AMOUNT;
+import static Utils.Constant.PORT;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -92,7 +91,8 @@ public class Server {
             while (flag) {
                 if (doSend) {
                     try {
-                        String s = DoSomething();
+//                        String s = DoSomething();
+                        String string = "Hello";
                         sendPacket = new DatagramPacket(new byte[150], 150, receivePacket.getAddress(), PORT);
                         // Send Packet to Server
                         socket.send(sendPacket);

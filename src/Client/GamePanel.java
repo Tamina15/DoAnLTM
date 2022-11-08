@@ -3,12 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package src.Client;
+package Client;
 
-import src.DTO.Number;
-import src.GUI.mainFrame;
-import src.Server.Server;
-import static src.Utils.Constant.*;
+import GUI.mainFrame;
+import Server.Server;
+import static Utils.Constant.*;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -24,6 +23,7 @@ import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JPanel;
+import DTO.Number;
 
 /**
  *

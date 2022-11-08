@@ -1,23 +1,18 @@
-package src.GUI;
+package GUI;
 
-import java.awt.event.MouseEvent;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import javax.swing.JButton;
 import java.awt.Color;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 
 import java.awt.Font;
-import java.awt.Frame;
 
 import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
-import java.awt.event.MouseAdapter;
 import java.awt.Cursor;
 
-import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JTextField;
 

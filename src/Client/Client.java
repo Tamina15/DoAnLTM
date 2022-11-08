@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package src.Client;
+package Client;
 
-import static src.Utils.Constant.PORT;
+import static Utils.Constant.PORT;
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;

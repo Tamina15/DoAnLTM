@@ -1,17 +1,12 @@
-package src.GUI;
+package GUI;
 
 import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLayeredPane;
-import java.awt.BorderLayout;
 import javax.swing.JLabel;
 import java.awt.Color;
 import java.awt.Cursor;
@@ -20,7 +15,6 @@ import javax.swing.SwingConstants;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
-import src.GUI.LoginForm;
 
 public class Home extends JFrame {
 
