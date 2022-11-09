@@ -16,7 +16,6 @@ import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.AffineTransform;
@@ -24,6 +23,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JPanel;
 import DTO.Number;
+import java.awt.event.MouseAdapter;
 
 /**
  *
@@ -76,18 +76,18 @@ public class GamePanel extends JPanel {
         Graphics2D g2 = (Graphics2D) g;
         // Zooming
         g2.setStroke(new BasicStroke(2f));
+        g2.setFont(new Font("Times New Roman", Font.BOLD, 20));
+
+        g2.setColor(Color.green);
+
+        g2.drawString(mainFrame.FPScount, 0, TILE_SIZE / 2);
+        g2.drawString("" + mainFrame.delta, TILE_SIZE, TILE_SIZE / 2);
 
 //        if (zoomer == true) {
 //            at = new AffineTransform();
 //            at.scale(zoomFactor, zoomFactor);
 //            //zoomer = false;
 //            g2.transform(at);
-//        }
-//        if (PAUSE) {
-//            this.setEnabled(false);
-//            return;
-//        }else {
-//            this.setEnabled(true);
 //        }
         if (isEndgame()) {
             g2.setColor(Color.green);
@@ -117,19 +117,15 @@ public class GamePanel extends JPanel {
             g2.drawString("" + (n.getId() + 1), n.getX() + (n.getWidth() - metrics.stringWidth("" + (n.getId() + 1))) / 2, n.getY() + n.getHeight() / 2 + metrics.getHeight() / 4);
         }
 
-        g2.setFont(new Font("Times New Roman", Font.BOLD, 20));
-
-        g2.setColor(Color.green);
-
-        g2.drawString(mainFrame.FPScount, 0, TILE_SIZE / 2);
-        g2.drawString("" + mainFrame.delta, TILE_SIZE, TILE_SIZE / 2);
-
         arc = (arc + 1) % 20;
 
         g2.dispose();
     }
 
     public boolean isEndgame() {
+        if(mainFrame.time < 0) {
+            return false;
+        }
         for (Number n : numbers) {
             if (!n.isFill()) {
                 return false;
@@ -156,7 +152,7 @@ public class GamePanel extends JPanel {
         return colors[rand.nextInt(colors.length)];
     }
 
-    class Mouse implements MouseListener {
+    class Mouse extends MouseAdapter {
 
         @Override
         public void mouseClicked(MouseEvent e) {
@@ -170,21 +166,6 @@ public class GamePanel extends JPanel {
             int x = e.getX();
             int y = e.getY();
             checkCollision(x, y);
-        }
-
-        @Override
-        public void mouseReleased(MouseEvent e) {
-//        int x = e.getX();
-//        int y = e.getY();
-//        checkCollision(x, y);
-        }
-
-        @Override
-        public void mouseEntered(MouseEvent e) {
-        }
-
-        @Override
-        public void mouseExited(MouseEvent e) {
         }
 
     }
