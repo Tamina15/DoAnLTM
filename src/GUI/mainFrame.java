@@ -7,6 +7,7 @@ package GUI;
 
 import Client.GamePanel;
 import Client.PointPanel;
+import static Utils.Constant.COMPLETE;
 import static Utils.Constant.FPS;
 import static Utils.Constant.PAUSE;
 import static Utils.Constant.REMAINING_TIME;
@@ -78,11 +79,18 @@ public class mainFrame extends JFrame implements Runnable {
                     gamePanel.repaint();
                     pointPanel.update();
                 }
+                if (COMPLETE) {
+                    AfterMatchFrame afterMatch = new AfterMatchFrame();
+                    this.dispose();
+                    return;
+                }
                 delta--;
                 count++;
             }
             if (timer >= 1000000000) {
-                time--;
+                if (!PAUSE) {
+                    time--;
+                }
                 //System.out.println((time / 60) + ":" + (time % 60));
                 REMAINING_TIME = String.format(" %02d:%02d", TimeUnit.SECONDS.toMinutes(time), TimeUnit.SECONDS.toSeconds(time) - TimeUnit.MINUTES.toSeconds(TimeUnit.SECONDS.toMinutes(time)));
                 FPScount = "" + count;

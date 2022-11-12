@@ -38,44 +38,10 @@ public class Server {
         }
     }
 
-    public void Receive() {
-        while (true) {
-            try {
-                // Receive data from client
-                buffer = new byte[1024];
-                receivePacket = new DatagramPacket(buffer, buffer.length);
-                socket.receive(receivePacket);
-                int z = 0;
-                for (int i = 0; i < buffer.length; i++) {
-                    if (buffer[i] == 0) {
-                        z = i;
-                        break;
-                    }
-                }
-                String string = new String(receivePacket.getData(), 0, z);
-                System.out.println("Server received: " + string + " from " + receivePacket.getAddress().getHostName());
-                if (string.equals("bye")) {
-                    sendPacket = new DatagramPacket(new byte[0], 0, receivePacket.getAddress(), receivePacket.getPort());
-                    socket.send(sendPacket);
-                    break;
-                }
-                // Send data to client
-                String result = Process(string);
-                System.out.println(result);
 
-                sendPacket = new DatagramPacket(result.getBytes(), result.getBytes().length, receivePacket.getAddress(), receivePacket.getPort());
-                socket.send(sendPacket);
-
-            } catch (IOException ex) {
-                Logger.getLogger(Server.class.getName()).log(Level.SEVERE, null, ex);
-                break;
-            }
-        }
-
-    }
 
     public String Process(String word) throws IOException {
-        String result = "Sai cu phap";
+        String result = word;
         return result;
     }
 
@@ -83,59 +49,6 @@ public class Server {
         socket.close();
     }
 
-    class Send implements Runnable {
-
-        @Override
-        public void run() {
-            System.out.println("Server ready to send data");
-            while (flag) {
-                if (doSend) {
-                    try {
-//                        String s = DoSomething();
-                        String string = "Hello";
-                        sendPacket = new DatagramPacket(new byte[150], 150, receivePacket.getAddress(), PORT);
-                        // Send Packet to Server
-                        socket.send(sendPacket);
-                        if (string.equals("bye") || socket.isConnected()) {
-                            flag = false;
-                            break;
-                        }
-                    } catch (IOException ex) {
-                        flag = false;
-                    }
-                }
-            }
-
-        }
-
-    }
-
-    class Receive implements Runnable {
-
-        @Override
-        public void run() {
-            System.out.println("Server is Receiving data");
-            while (flag) {
-                try {
-                    byte[] receive = new byte[150];
-                    receivePacket = new DatagramPacket(receive, receive.length);
-                    socket.receive(receivePacket);
-                    String string = new String(receivePacket.getData());
-                    DoSomething(string);
-                    doSend = true;
-                } catch (IOException ex) {
-                    flag = false;
-                }
-
-            }
-        }
-
-        private String DoSomething(String string) {
-            System.out.println(string);
-            return string;
-        }
-
-    }
 
     public static void RandomizeArray() {
         for (int i = 0; i < array.length; i++) {
@@ -164,8 +77,59 @@ class main {
 
     public static void main(String[] args) throws IOException {
         Server server = new Server();
-        server.Receive();
+
         server.CloseServer();
 
     }
 }
+//    class Send implements Runnable {
+//
+//        @Override
+//        public void run() {
+//            System.out.println("Server ready to send data");
+//            while (flag) {
+//                if (doSend) {
+//                    try {
+//                        String string = "Hello";
+//                        sendPacket = new DatagramPacket(new byte[150], 150, receivePacket.getAddress(), PORT);
+//                        // Send Packet to Server
+//                        socket.send(sendPacket);
+//                        if (string.equals("bye") || socket.isConnected()) {
+//                            flag = false;
+//                            break;
+//                        }
+//                    } catch (IOException ex) {
+//                        flag = false;
+//                    }
+//                    doSend = false;
+//                }
+//            }
+//        }
+//    }
+//
+//    class Receive implements Runnable {
+//
+//        @Override
+//        public void run() {
+//            System.out.println("Server is Receiving data");
+//            while (flag) {
+//                try {
+//                    byte[] receive = new byte[150];
+//                    receivePacket = new DatagramPacket(receive, receive.length);
+//                    socket.receive(receivePacket);
+//                    String string = new String(receivePacket.getData());
+//                    DoSomething(string);
+//                    doSend = true;
+//                } catch (IOException ex) {
+//                    flag = false;
+//                }
+//            }
+//        }
+//
+//        private String DoSomething(String string) {
+//            System.out.println(string);
+//            return string;
+//        }
+//
+//    }
+

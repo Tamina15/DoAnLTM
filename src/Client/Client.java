@@ -43,33 +43,33 @@ public class Client {
         r.start();
     }
 
-    public void SendData() {
-        byte[] data;
-        while (true) {
-            try {
-                System.out.print("User input: ");
-                String string = scanner.nextLine();
-
-                data = string.getBytes();
-                sendPacket = new DatagramPacket(data = new byte[data.length], data.length, address, PORT);
-                // Send Packet to Server
-
-                socket.send(sendPacket);
-
-                if (string.equals("bye") || socket.isConnected()) {
-                    break;
-                }
-
-                // Receive Packet From Server
-                receivePacket = new DatagramPacket(data = new byte[data.length], data.length);
-                socket.receive(receivePacket);
-                string = new String(receivePacket.getData());
-                System.out.println(string);
-            } catch (IOException ex) {
-                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }
-    }
+//    public void SendData() {
+//        byte[] data;
+//        while (true) {
+//            try {
+//                System.out.print("User input: ");
+//                String string = scanner.nextLine();
+//
+//                data = string.getBytes();
+//                sendPacket = new DatagramPacket(data = new byte[data.length], data.length, address, PORT);
+//                // Send Packet to Server
+//
+//                socket.send(sendPacket);
+//
+//                if (string.equals("bye") || socket.isConnected()) {
+//                    break;
+//                }
+//
+//                // Receive Packet From Server
+//                receivePacket = new DatagramPacket(data = new byte[data.length], data.length);
+//                socket.receive(receivePacket);
+//                string = new String(receivePacket.getData());
+//                System.out.println(string);
+//            } catch (IOException ex) {
+//                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+//            }
+//        }
+//    }
 
     public void CloseClient() {
         System.out.println("Client Disconnect");
@@ -84,11 +84,10 @@ public class Client {
             System.out.println("Client ready to send data");
             while (flag) {
                 try {
-                    byte[] send = new byte[150];
+                    byte[] send;
                     System.out.print("User input: ");
                     String string = scanner.nextLine();
                     send = string.getBytes();
-                    System.out.println(string);
                     sendPacket = new DatagramPacket(send, send.length, address, PORT);
                     // Send Packet to Server
                     socket.send(sendPacket);
@@ -125,6 +124,7 @@ public class Client {
         }
 
         private void DoSomething(String s) {
+            // Change Data Variable
             System.out.println(s);
         }
     }

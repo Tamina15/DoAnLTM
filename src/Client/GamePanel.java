@@ -68,7 +68,7 @@ public class GamePanel extends JPanel {
         }
     }
 
-    int arc = 1;
+    int arc = 0;
 
     @Override
     public void paintComponent(Graphics g) {
@@ -123,14 +123,16 @@ public class GamePanel extends JPanel {
     }
 
     public boolean isEndgame() {
-        if(mainFrame.time < 0) {
-            return false;
+        if (mainFrame.time < 0) {
+            COMPLETE = true;
+            return true;
         }
         for (Number n : numbers) {
             if (!n.isFill()) {
                 return false;
             }
         }
+        COMPLETE = true;
         return true;
     }
 
