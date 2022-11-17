@@ -17,7 +17,7 @@ public class Number {
     private Rectangle hitbox;
     private int id, x, y, width, height;
     private int row, col;
-    private boolean hit, fill;
+    private boolean hit, fill, lucky;
     private Color color;
 
     public Number() {
@@ -33,6 +33,7 @@ public class Number {
         this.col = col;
         this.hit = false;
         this.fill = false;
+        this.lucky = false;
         this.color = color;
         this.hitbox = new Rectangle(x, y, width, height);
 
@@ -128,6 +129,14 @@ public class Number {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public boolean isLucky() {
+        return lucky;
+    }
+
+    public void setLucky(boolean lucky) {
+        this.lucky = lucky;
     }
 
 }

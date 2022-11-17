@@ -83,12 +83,6 @@ public class GamePanel extends JPanel {
         g2.drawString(mainFrame.FPScount, 0, TILE_SIZE / 2);
         g2.drawString("" + mainFrame.delta, TILE_SIZE, TILE_SIZE / 2);
 
-//        if (zoomer == true) {
-//            at = new AffineTransform();
-//            at.scale(zoomFactor, zoomFactor);
-//            //zoomer = false;
-//            g2.transform(at);
-//        }
         if (isEndgame()) {
             g2.setColor(Color.green);
             g2.drawString("Game Over", 0, TILE_SIZE / 2);
@@ -172,37 +166,5 @@ public class GamePanel extends JPanel {
 
     }
 
-    class MouseWheel implements MouseWheelListener {
-
-        Double zoomFactor = 1.0d;
-        boolean zoomer;
-        AffineTransform at;
-
-        @Override
-        public void mouseWheelMoved(MouseWheelEvent e) {
-            //Zoom in
-            if (e.getWheelRotation() < 0) {
-                this.setZoomFactor(1.1 * this.getZoomFactor());
-
-            }
-            //Zoom out
-            if (e.getWheelRotation() > 0) {
-                this.setZoomFactor(this.getZoomFactor() / 1.1);
-            }
-
-        }
-
-        public Double getZoomFactor() {
-            return zoomFactor;
-        }
-
-        public void setZoomFactor(double factor) {
-            if (factor < this.zoomFactor) {
-                this.zoomFactor = this.zoomFactor / 1.1;
-            } else {
-                this.zoomFactor = factor;
-            }
-            this.zoomer = true;
-        }
-    }
+    
 }

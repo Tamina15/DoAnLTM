@@ -39,7 +39,7 @@ public class Client1 {
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             scanner = new Scanner(System.in);
         } catch (IOException ex) {
-            Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Client1.class.getName()).log(Level.SEVERE, null, ex);
             System.out.println("Error. Cannot Connect");
         }
 
@@ -126,7 +126,7 @@ public class Client1 {
     }
 
     public static void main(String[] args) {
-        Client client = new Client();
+        Client1 client = new Client1();
         client.StartThread();
         try {
             client.r.join();

@@ -27,7 +27,6 @@ public class AfterMatchFrame extends JFrame{
         this.setLocationRelativeTo(null);
         this.setVisible(true);
     }
-    
 }
 class AfterMatchPanel extends JPanel{
     public AfterMatchPanel(){

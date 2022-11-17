@@ -25,11 +25,11 @@ public class Server1 {
     static ServerSocket server;
     static Socket socket; //at server
     static int id = 1;
-
+    static Pair pair;
     static public HashMap<Integer, ServerThread> socketMap = new HashMap();
 
     public static void main(String args[]) {
-
+        pair = new Pair();
         System.out.println("Server Listening......");
         try {
             server = new ServerSocket(1235);
@@ -48,6 +48,10 @@ public class Server1 {
                 ServerThread st = new ServerThread(id, socket, in, out);
                 Thread t = new Thread(st);
                 socketMap.put(id, st);
+                if(pair.isFull()){
+                    pair = new Pair();
+                    pair.AddClient(st);
+                }else pair.AddClient(st);
                 id++;
                 t.start();
             } catch (IOException e) {
