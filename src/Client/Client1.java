@@ -135,7 +135,6 @@ public class Client1 {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
         client.CloseClient();
-
     }
 
 }

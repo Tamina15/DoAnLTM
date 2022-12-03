@@ -72,6 +72,7 @@ public class Pair {
     public static void NextNumber() {
         if (currentIndex + 1 <= NUMBER_AMOUNT) {
             currentNumber = array[currentIndex++];
+            
         }
     }
 
