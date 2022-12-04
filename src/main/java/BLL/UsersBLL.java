@@ -13,33 +13,40 @@ import java.util.Vector;
  * @author king
  */
 public class UsersBLL {
+
     private UsersDAL usersDAL = new UsersDAL();
-    
+
     public Vector<Users> getUsers() {
         Vector<Users> listUsers = usersDAL.getUsers();
         return listUsers;
     }
-    public Vector<Users> getRanking(){
+
+    public Vector<Users> getRanking() {
         Vector<Users> listUsers = usersDAL.getRanking();
         return listUsers;
     }
-    public int getPoint(String email){
+
+    public int getPoint(String email) {
         int result = usersDAL.getPointByMail(email);
         return result;
     }
-    public Vector<Users> getWinPercentRanking(){
+
+    public Vector<Users> getWinPercentRanking() {
         Vector<Users> listUsers = usersDAL.getPercentRanking();
         return listUsers;
     }
-    public int getWinPercentById(String email){
+
+    public int getWinPercentByMail(String email) {
         int result = usersDAL.getWinPercentByMail(email);
         return result;
     }
-    public Vector<Users> searchRank(String key){
+
+    public Vector<Users> searchRank(String key) {
         Vector<Users> listUsers = usersDAL.searchRank(key);
         return listUsers;
     }
-    public int getRankById(String email){
+
+    public int getRankByMail(String email) {
         int result = usersDAL.getRankByMail(email);
         return result;
     }

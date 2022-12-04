@@ -10,6 +10,7 @@ import static Utils.Class.HOME;
 import static Utils.Class.LOGIN_FORM;
 import static Utils.Class.MAIN_FRAME;
 import static Utils.Class.REGISTER_FORM;
+import static Utils.Class.STATISTIC;
 import static Utils.Constant.ADDRESS;
 import static Utils.Constant.PORT;
 import java.awt.Color;
@@ -54,7 +55,7 @@ public class Client {
             out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
             in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
             scanner = new Scanner(System.in);
-//		objectInput = new ObjectInputStream(socket.getInputStream());
+            objectInput = new ObjectInputStream(socket.getInputStream());
         } catch (IOException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -68,12 +69,35 @@ public class Client {
         public void run() {
             try {
                 System.out.println("Listening");
+                Vector<Vector<String>> result = new Vector<Vector<String>>();
                 while (flag) {
                     String line = in.readLine();
                     System.out.println("Line :" + line);
                     String[] array = line.split("\\]\\:\\$\\:\\[");
                     String command = array[0];
                     switch (command) {
+                        case "rankloaded":
+                            //synchronized (objectInput) {
+                            result = (Vector<Vector<String>>) objectInput.readObject();
+                            //}
+                            STATISTIC.loadRankingTable(result);
+                            break;
+                        case "percentloaded":
+                            //synchronized (objectInput) {
+                            result = (Vector<Vector<String>>) objectInput.readObject();
+                            //}
+                            STATISTIC.loadWinPercentTable(result);
+                            break;
+                        case "searchloaded":
+                            //synchronized (objectInput) {
+                            result = (Vector<Vector<String>>) objectInput.readObject();
+                            //}
+                            STATISTIC.loadCheckSTTTable(result);
+                            break;
+                        case "searcherror":
+                            //result = (Vector<Vector<String>>)objectInput.readObject();
+                            STATISTIC.searchFail();
+                            break;
                         // Nếu login thành công
                         case "loginsuccess":
                             LOGIN_FORM.LoginSuccess();
@@ -165,6 +189,8 @@ public class Client {
             } catch (IOException ex) {
                 exit();
                 flag = false;
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
             } finally {
                 exit();
             }
@@ -195,6 +221,7 @@ public class Client {
     public String receive() throws IOException {
         return (in.readLine());
     }
+
     //                                                                                                          ^
     //                                                                                                          |
 // Không trả về result nữa, client sẽ gọi hàm xử lý của class tương ứng với dữ liệu server trả về, xem hàm run()|, xem LoginForm
@@ -248,27 +275,49 @@ public class Client {
     public void getInfoOfUser() throws IOException {
         sendOnlyCmd("UserInfo");
     }
+//
 
-    public Vector<Vector<String>> getRankingTable() throws IOException, ClassNotFoundException {
+    public void getTable() {
         sendOnlyCmd("Statistic");
-        Vector<Vector<String>> result = new Vector<Vector<String>>();
-        result = (Vector<Vector<String>>) objectInput.readObject();
-        return result;
+        try {
+            Thread.sleep(10);
+        } catch (Exception e) {
+            System.out.println("Thread  interrupted.");
+        }
     }
 
-    public Vector<Vector<String>> getPercentRankingTable() throws IOException, ClassNotFoundException {
+    public void getPTable() {
         sendOnlyCmd("PercentRank");
-        Vector<Vector<String>> result = new Vector<Vector<String>>();
-        result = (Vector<Vector<String>>) objectInput.readObject();
-        return result;
+        try {
+            Thread.sleep(10);
+        } catch (Exception e) {
+            System.out.println("Thread  interrupted.");
+        }
     }
 
-    public Vector<Vector<String>> getSearchRank(String key) throws IOException, ClassNotFoundException {
+    public void getSearch(String key) {
         send("SearchRank", key);
-        Vector<Vector<String>> result = new Vector<Vector<String>>();
-        result = (Vector<Vector<String>>) objectInput.readObject();
-        return result;
     }
+//    public Vector<Vector<String>> getRankingTable() throws IOException, ClassNotFoundException {
+//        sendOnlyCmd("Statistic");
+//        Vector<Vector<String>> result = new Vector<Vector<String>>();
+//        result = (Vector<Vector<String>>) objectInput.readObject();
+//        return result;
+//    }
+//
+//    public Vector<Vector<String>> getPercentRankingTable() throws IOException, ClassNotFoundException {
+//        sendOnlyCmd("PercentRank");
+//        Vector<Vector<String>> result = new Vector<Vector<String>>();
+//        result = (Vector<Vector<String>>) objectInput.readObject();
+//        return result;
+//    }
+//
+//    public Vector<Vector<String>> getSearchRank(String key) throws IOException, ClassNotFoundException {
+//        send("SearchRank", key);
+//        Vector<Vector<String>> result = new Vector<Vector<String>>();
+//        result = (Vector<Vector<String>>) objectInput.readObject();
+//        return result;
+//    }
 
     public String hashPasswordMD5(String pass) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");

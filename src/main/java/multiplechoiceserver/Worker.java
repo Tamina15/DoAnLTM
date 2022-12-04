@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutput;
 import java.io.OutputStreamWriter;
 import java.net.Socket;
@@ -13,11 +12,18 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.crypto.SecretKey;
+import java.util.Date;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import com.sun.mail.smtp.SMTPTransport;
 import BLL.*;
 import DTO.Users;
+import java.io.ObjectOutputStream;
 
 public class Worker implements Runnable {
 
@@ -63,13 +69,13 @@ public class Worker implements Runnable {
     private UsersBLL usersBLL;
 
     ObjectOutput objectOutput;
-    ObjectInputStream objectInput;
+//    ObjectInputStream objectInput;
 
     public Worker(Socket s) throws IOException {
         this.socket = s;
         this.in = new BufferedReader(new InputStreamReader(s.getInputStream()));
         this.out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
-        objectInput = new ObjectInputStream(socket.getInputStream());
+        //objectInput = new ObjectInputStream(socket.getInputStream());
     }
 
     public Worker(int id, Socket s, BufferedReader in, BufferedWriter out) throws IOException {
@@ -81,7 +87,7 @@ public class Worker implements Runnable {
         score = 0;
         usersBLL = new UsersBLL();
         this.myName = "anonymos";
-//        objectInput = new ObjectInputStream(s.getInputStream());
+        this.objectOutput = new ObjectOutputStream(socket.getOutputStream());
     }
 
     public void run() {
@@ -103,7 +109,7 @@ public class Worker implements Runnable {
     }
 
 //kiểm tra request client
-    public String checkfunction(String line) {
+    public String checkfunction(String line) throws IOException {
         String kq = "error";
         String[] mang;
         mang = line.split("\\]\\:\\$\\:\\[");
@@ -145,7 +151,7 @@ public class Worker implements Runnable {
             case "LogOut":
                 this.myName = "anonymos";
                 break;
-                
+
             // Nếu client nhấn vào một số trong trò chơi
             case "click":
                 if (pair.isGameStarted()) {
@@ -289,6 +295,19 @@ public class Worker implements Runnable {
         }
     }
 
+    public void sendObj(Vector<Vector<String>> result) {
+        try {
+//                synchronized (objectOutput) {
+            objectOutput.writeObject(result);
+            objectOutput.flush();
+            //}
+        } catch (IOException ex) {
+            System.err.println(ex);
+            Close();
+        }
+
+    }
+
 //trộn
     public void shuffle(ArrayList data) {
         Collections.shuffle(data);
@@ -348,7 +367,7 @@ public class Worker implements Runnable {
         return (float) (getSumWinerbyUser() / Integer.parseInt(kq));
     }
 
-// bảng xếp hạng
+    // bảng xếp hạng
     public void loadRankingTable() {
         Vector<Users> list = usersBLL.getRanking();
         int i = 1;
@@ -362,48 +381,60 @@ public class Worker implements Runnable {
             rowData.add(Integer.toString(usersDTO.getTotalMatch()));
             result.add(rowData);
         }
+        send("rankloaded");
         try {
-            objectOutput.writeObject(result);
-        } catch (IOException ex) {
-            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+            Thread.sleep(10);
+        } catch (Exception e) {
+            System.out.println("Thread  interrupted.");
         }
+        sendObj(result);
+
     }
-//tỉ lệ thắng
+    //tỉ lệ thắng
 
     public void loadWinPercentRanking() {
         Vector<Users> list = usersBLL.getWinPercentRanking();
         Vector<Vector<String>> result = new Vector<Vector<String>>();
         for (Users usersDTO : list) {
             Vector<String> rowData = new Vector<String>();
-            rowData.add(Integer.toString(usersBLL.getWinPercentById(usersDTO.getEmail())));
+            rowData.add(Integer.toString(usersBLL.getWinPercentByMail(usersDTO.getEmail())));
             rowData.add(usersDTO.getName());
             // dfm.addRow(rowData);
             result.add(rowData);
         }
+        send("percentloaded");
         try {
-            objectOutput.writeObject(result);
-        } catch (IOException ex) {
-            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+            Thread.sleep(10);
+        } catch (Exception e) {
+            System.out.println("Thread  interrupted.");
         }
+        sendObj(result);
+
     }
 
-//tra cứu xếp hạng
+    //tra cứu xếp hạng
     public void loadSearchRanking(String key) {
         Vector<Users> list = usersBLL.searchRank(key);
         Vector<Vector<String>> result = new Vector<Vector<String>>();
         for (Users usersDTO : list) {
             Vector<String> rowData = new Vector<String>();
-            rowData.add(Integer.toString(usersBLL.getRankById(usersDTO.getEmail())));
+            rowData.add(Integer.toString(usersBLL.getRankByMail(usersDTO.getEmail())));
             rowData.add(Integer.toString(usersBLL.getPoint(usersDTO.getEmail())));
             rowData.add(usersDTO.getName());
             // rowData.add(usersDTO.getEmail());
             rowData.add(Integer.toString(usersDTO.getTotalMatch()));
             result.add(rowData);
         }
-        try {
-            objectOutput.writeObject(result);
-        } catch (IOException ex) {
-            Logger.getLogger(Worker.class.getName()).log(Level.SEVERE, null, ex);
+        if (result.isEmpty()) {
+            send("searcherror");
+        } else {
+            send("searchloaded");
+            try {
+                Thread.sleep(10);
+            } catch (Exception e) {
+                System.out.println("Thread  interrupted.");
+            }
+            sendObj(result);
         }
     }
 
@@ -511,14 +542,13 @@ public class Worker implements Runnable {
         this.objectOutput = objectOutput;
     }
 
-    public ObjectInputStream getObjectInput() {
-        return objectInput;
-    }
-
-    public void setObjectInput(ObjectInputStream objectInput) {
-        this.objectInput = objectInput;
-    }
-
+//    public ObjectInputStream getObjectInput() {
+//        return objectInput;
+//    }
+//
+//    public void setObjectInput(ObjectInputStream objectInput) {
+//        this.objectInput = objectInput;
+//    }
     public void Close() {
         try {
             System.out.println(name + "Connection Closing..");
@@ -531,6 +561,9 @@ public class Worker implements Runnable {
                 out.close();
                 System.out.println(name + "Socket Out Closed ");
             }
+            if (objectOutput != null) {
+                objectOutput.close();
+            }
             if (socket != null) {
                 socket.close();
                 System.out.println(name + "Socket Closed ");
@@ -541,5 +574,66 @@ public class Worker implements Runnable {
         }
         Server.workerMap.remove(id);
         Server.workers.remove(this);
+    }
+
+    // gửi gmail
+    public static void SendEmail() {
+        String SMTP_SERVER = "smtp.gmail.com";
+        String USERNAME = "nhichap1202@gmail.com";
+        String PASSWORD = "kjjcewgwxkqkfibj";
+
+        String EMAIL_FROM = "nhichap1202@gmail.com";
+        String EMAIL_TO_CC = "";
+
+        String EMAIL_SUBJECT = "Thông tin từ KTTN ";
+        // String EMAIL_TEXT = "Mã OTP của bạn là: ";
+        Properties prop = System.getProperties();
+        prop.put("mail.smtp.host", SMTP_SERVER); // Thiết lập smtp, smtp của gmail là smtp.gmail.com
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.ssl.enable", "true");
+        prop.put("mail.smtp.port", "465"); // default port gmail 465
+        prop.put("mail.smtp.auth", "true");
+        prop.put("mail.smtp.starttls.enable", "true");
+        prop.put("mail.smtp.starttls.required", "true");
+        prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
+        prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+
+        Session session = Session.getInstance(prop, null);
+        Message msg = new MimeMessage(session);
+
+        try {
+
+            // from
+            msg.setFrom(new InternetAddress(EMAIL_FROM));
+
+            // to
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse("nhichap02@gmail.com", false));
+
+            // cc
+            msg.setRecipients(Message.RecipientType.CC, InternetAddress.parse(EMAIL_TO_CC, false));
+
+            // subject
+            msg.setSubject(EMAIL_SUBJECT);
+
+            // content
+            msg.setText("xin chao toi là nhi day");
+
+            msg.setSentDate(new Date());
+
+            // Get SMTPTransport
+            SMTPTransport t = (SMTPTransport) session.getTransport("smtp");
+
+            // connect
+            t.connect(SMTP_SERVER, USERNAME, PASSWORD);
+
+            // send
+            t.sendMessage(msg, msg.getAllRecipients());
+
+            // System.out.println("Response: " + t.getLastServerResponse());
+            t.close();
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
 }

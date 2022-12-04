@@ -14,6 +14,7 @@ import javax.swing.SwingConstants;
 
 import javax.swing.JLabel;
 import static Utils.Class.MAIN_FRAME;
+import static Utils.Class.STATISTIC;
 public class HomeSelection extends JFrame {
 
     public static Client client;
@@ -79,14 +80,8 @@ public class HomeSelection extends JFrame {
         lbl_IconTop.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                Statistic j;
-                try {
-                    j = new Statistic(client);
-                    j.setVisible(true);
-                } catch (ClassNotFoundException | IOException e1) {
-                    // TODO Auto-generated catch block
-                    System.err.println(e1);
-                }
+                STATISTIC = new Statistic(client); // TODO Auto-generated catch block
+                STATISTIC.setVisible(true);
                 closeThisWindow();
             }
         });
