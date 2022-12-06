@@ -10,7 +10,8 @@ import static Utils.Class.HOME;
 import static Utils.Class.LOGIN_FORM;
 import static Utils.Class.MAIN_FRAME;
 import static Utils.Class.REGISTER_FORM;
-import static Utils.Class.STATISTIC;
+import static Utils.Class.*;
+
 import static Utils.Constant.ADDRESS;
 import static Utils.Constant.PORT;
 import java.awt.Color;
@@ -113,6 +114,14 @@ public class Client {
                         // Nếu đăng ký thành công
                         case "signupsuccess":
                             REGISTER_FORM.EmailHopLe();
+                            break;
+                        //Nếu otp hết hạn
+                        case "otphethan":
+                        	OTP_FORM.TimeoutOTP();;
+                            break;
+                          //Nếu otp sai
+                        case "otpsai":
+                        	OTP_FORM.WrongOTP();
                             break;
                         // Nếu sql lỗi trong khi đăng ký
                         case "signupfail":
@@ -235,7 +244,19 @@ public class Client {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    public int sendOTP(String otp) throws IOException {
+    	sendOnlyCmd(otp);
+    	String kq = receive();
+    	if(kq.equals("signupsuccess")) {
+    		return 1; 			// thanh cong 
+    	}
+    	else if(kq.equals("otpsai")) {
+    		return 0;			// otp sai
+    	} else if(kq.equals("otphethan")) {
+    		return -1;
+    	}
+    	else return -2;
+    }
     public void signup(String email, char[] passwd, String name, String gender, String DoB) {
         StringBuilder sb = new StringBuilder();
         sb.append(passwd);

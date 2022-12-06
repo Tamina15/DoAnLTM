@@ -9,9 +9,10 @@ import GUI.EditInforForm;
 import GUI.Home;
 import GUI.HomeSelection;
 import GUI.LoginForm;
+import GUI.OTPForm;
 import GUI.RegisterForm;
 import GUI.Statistic;
-import GUI.mainFrame;
+import GUI.*;
 
 /**
  *
@@ -27,4 +28,5 @@ public class Class {
     public static EditInforForm EDIT_INFO_FORM;
     public static Statistic STATISTIC;
     public static mainFrame MAIN_FRAME;
+    public static OTPForm OTP_FORM;
 }

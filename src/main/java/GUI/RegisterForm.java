@@ -1,6 +1,6 @@
 package GUI;
 
-import static Utils.Class.HOME_SELECTION;
+import static Utils.Class.*;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
@@ -96,6 +96,7 @@ public class RegisterForm extends JFrame {
         contentPane.add(lblEmail);
 
         emailField = new JTextField();
+        emailField.setForeground(new Color(255, 255, 255));
         emailField.setOpaque(false);
         emailField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         emailField.setDisabledTextColor(new Color(0, 139, 139));
@@ -137,6 +138,7 @@ public class RegisterForm extends JFrame {
         contentPane.add(lblPassword);
 
         passwordField = new JPasswordField();
+        passwordField.setForeground(new Color(255, 255, 255));
         passwordField.setOpaque(false);
         passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         passwordField.setDisabledTextColor(new Color(0, 139, 139));
@@ -154,6 +156,7 @@ public class RegisterForm extends JFrame {
         contentPane.add(lblConfirm);
 
         confirmField = new JPasswordField();
+        confirmField.setForeground(new Color(255, 255, 255));
         confirmField.setOpaque(false);
         confirmField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         confirmField.setDisabledTextColor(new Color(0, 139, 139));
@@ -170,6 +173,7 @@ public class RegisterForm extends JFrame {
         contentPane.add(lblName);
 
         nameField = new JTextField();
+        nameField.setForeground(new Color(255, 255, 255));
         nameField.setOpaque(false);
         nameField.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         nameField.setDisabledTextColor(new Color(0, 139, 139));
@@ -290,10 +294,12 @@ public class RegisterForm extends JFrame {
     }
 
     public void EmailHopLe() {
-        HOME_SELECTION = new HomeSelection(client);
-        HOME_SELECTION.setVisible(true);
-        HOME_SELECTION.setEnabled(true);
-        closeThisWindow();
+    	OTP_FORM= new OTPForm(client);
+    	OTP_FORM.setVisible(true);
+//        HOME_SELECTION = new HomeSelection(client);
+//        HOME_SELECTION.setVisible(true);
+//        HOME_SELECTION.setEnabled(true);
+//        closeThisWindow();
     }
 
     public void EmailKhongHopLe() {
@@ -308,4 +314,5 @@ public class RegisterForm extends JFrame {
     public void closeThisWindow() {
         this.dispose();
     }
+   
 }

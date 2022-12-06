@@ -72,6 +72,7 @@ public class LoginForm extends JFrame {
         contentPane.add(lblNewLabel);
 
         txt_username = new JTextField();
+        txt_username.setForeground(new Color(255, 255, 255));
         txt_username.setOpaque(false);
         txt_username.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         txt_username.setDisabledTextColor(new Color(0, 139, 139));
@@ -88,6 +89,7 @@ public class LoginForm extends JFrame {
         contentPane.add(lblMtKhu);
 
         txt_pass = new JPasswordField();
+        txt_pass.setForeground(new Color(255, 255, 255));
         txt_pass.setOpaque(false);
         txt_pass.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         txt_pass.setDisabledTextColor(new Color(0, 139, 139));

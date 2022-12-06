@@ -116,6 +116,7 @@ public class EditInforForm extends JFrame {
         contentPane.add(btnBack);
 
         txtName = new JTextField();
+        txtName.setForeground(new Color(255, 255, 255));
         txtName.setOpaque(false);
         txtName.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         txtName.setDisabledTextColor(new Color(0, 139, 139));
@@ -190,6 +191,7 @@ public class EditInforForm extends JFrame {
         contentPane.add(lblMtKhu);
 
         txt_pass = new JPasswordField();
+        txt_pass.setForeground(new Color(255, 255, 255));
         txt_pass.setOpaque(false);
         txt_pass.setFont(new Font("Segoe UI", Font.PLAIN, 15));
         txt_pass.setDisabledTextColor(new Color(0, 139, 139));
