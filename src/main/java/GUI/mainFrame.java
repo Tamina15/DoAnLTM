@@ -31,7 +31,7 @@ public class mainFrame extends JFrame implements Runnable {
 
     public static Container c;
     public static int currentNumber;
-    boolean blackout = false;
+    static boolean blackout = false;
 
     mainFrame() {
 

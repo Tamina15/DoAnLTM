@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Random;
 import javax.swing.JPanel;
 import DTO.Number;
+import static Utils.Class.MAIN_FRAME;
 import java.awt.event.MouseAdapter;
 
 public class GamePanel extends JPanel {
@@ -59,7 +60,11 @@ public class GamePanel extends JPanel {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D) g;
-        // Zooming
+        
+        if(MAIN_FRAME.blackout){
+            this.setBackground(Color.BLACK);
+            return;
+        }
         g2.setStroke(new BasicStroke(2f));
         g2.setFont(new Font("Times New Roman", Font.BOLD, 20));
         
