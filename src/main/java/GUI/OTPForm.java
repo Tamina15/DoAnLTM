@@ -9,6 +9,7 @@ import javax.swing.SwingConstants;
 import javax.swing.Timer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import static Utils.Class.*;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -87,22 +88,13 @@ public class OTPForm extends JFrame {
 		btnXacNhan.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				int kq;
 				try {
-					kq = cl.sendOTP(String.valueOf(txtOTP.getText()));
-					if (kq == 1) {
-						JOptionPane.showMessageDialog(contentPane, "Signup successfully.", "Information",
-								JOptionPane.INFORMATION_MESSAGE);
-						CloseThisFrame();
-						new RegisterForm(cl).dispose();
-						new LoginForm(cl).setVisible(true);
-					} else
-						JOptionPane.showMessageDialog(contentPane, "Something wrong!! Please try later", "Error",
-								JOptionPane.ERROR_MESSAGE);
+					cl.sendOTP(String.valueOf(txtOTP.getText()));
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+
 			}
 		});
 		contentPane.add(btnXacNhan);
@@ -110,13 +102,13 @@ public class OTPForm extends JFrame {
 		JButton btnHuy = new JButton("Hủy");
 		btnHuy.setBounds(10, 149, 89, 23);
 		btnXacNhan.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				CloseThisFrame();
-			}
-		});
-		contentPane.add(btnHuy);
+
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		CloseThisFrame();
 	}
+
+	});contentPane.add(btnHuy);}
 
 	public void CloseThisFrame() {
 		this.dispose();
@@ -132,5 +124,12 @@ public class OTPForm extends JFrame {
 		JOptionPane.showMessageDialog(contentPane, "OTP code was expired! Please try again!", "Error",
 				JOptionPane.ERROR_MESSAGE);
 		CloseThisFrame();
+	}
+
+	public void TrueOTP() {
+		CloseThisFrame();
+		REGISTER_FORM.closeThisWindow();
+		HOME_SELECTION = new HomeSelection(cl);
+		HOME_SELECTION.setVisible(true);	
 	}
 }

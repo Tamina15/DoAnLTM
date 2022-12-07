@@ -150,17 +150,6 @@ public class LoginForm extends JFrame {
             default:
                 client.verifyLogin(txt_username.getText(), txt_pass.getPassword());
                 break;
-//              Thay thế bằng LoginFail
-//                if (rs == -1) {
-//                    JOptionPane.showMessageDialog(contentPane, "Wrong email or password! Please try again.", "Error Message", JOptionPane.ERROR_MESSAGE);
-//                    txt_pass.setText("");
-                
-//              Thay thế bằng LoginSuccess
-//                } else if (rs == 1) {
-//                    HomeSelection.status = 1;
-//                    new HomeSelection(client).setVisible(true);
-//                    this.dispose();
-//                }
         }
     }
 

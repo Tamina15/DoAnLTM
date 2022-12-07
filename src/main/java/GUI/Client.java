@@ -107,13 +107,17 @@ public class Client {
                         case "loginfail":
                             LOGIN_FORM.LoginFail();
                             break;
-                        // Nếu đăng ký thất bại, email không đúng
+                        // Nếu  email không đúng
                         case "emailkhonghople":
                             REGISTER_FORM.EmailKhongHopLe();
                             break;
                         // Nếu đăng ký thành công
                         case "signupsuccess":
-                            REGISTER_FORM.EmailHopLe();
+                        	OTP_FORM.TrueOTP();
+                            break;
+                        // Nếu email hợp lệ
+                        case "emailhople":
+                        	REGISTER_FORM.EmailHopLe();
                             break;
                         //Nếu otp hết hạn
                         case "otphethan":

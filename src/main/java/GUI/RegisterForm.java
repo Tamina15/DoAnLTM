@@ -296,9 +296,6 @@ public class RegisterForm extends JFrame {
     public void EmailHopLe() {
     	OTP_FORM= new OTPForm(client);
     	OTP_FORM.setVisible(true);
-//        HOME_SELECTION = new HomeSelection(client);
-//        HOME_SELECTION.setVisible(true);
-//        HOME_SELECTION.setEnabled(true);
 //        closeThisWindow();
     }
 
