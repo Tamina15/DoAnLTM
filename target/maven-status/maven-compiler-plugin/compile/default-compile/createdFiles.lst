@@ -2,6 +2,9 @@ GUI\EditInforForm$2.class
 GUI\RegisterForm.class
 GUI\Client$Receive.class
 GUI\HomeSelection$4.class
+GUI\Statistic$4.class
+GUI\OTPForm.class
+GUI\OTPForm$2.class
 GUI\HomeSelection$1.class
 DAL\UsersDAL.class
 BLL\GamesBLL.class
@@ -21,12 +24,14 @@ multiplechoiceserver\Pair.class
 multiplechoiceserver\ConnectionDB.class
 GUI\AfterMatchFrame.class
 GUI\EditInforForm$1.class
+GUI\OTPForm$3.class
 multiplechoiceserver\Worker.class
+GUI\Statistic$5.class
 GUI\Statistic$2.class
-Utils\Util.class
 GUI\Home$3.class
 DTO\Users.class
 multiplechoiceserver\Pair$1.class
+GUI\Statistic$6.class
 GUI\LoginForm.class
 Utils\Constant.class
 GUI\Statistic.class
@@ -35,8 +40,10 @@ GUI\GamePanel$Mouse.class
 GUI\HomeSelection$3.class
 GUI\RegisterForm$3.class
 GUI\AfterMatchPanel$1.class
+GUI\Statistic$3.class
 GUI\EditInforForm.class
 GUI\mainFrame.class
+GUI\OTPForm$1.class
 DTO\Games.class
 multiplechoiceserver\Server.class
 GUI\HomeSelection$2.class

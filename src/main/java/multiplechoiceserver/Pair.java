@@ -1,5 +1,6 @@
 package multiplechoiceserver;
 
+import static Utils.Class.SERVER;
 import static Utils.Constant.LUCK;
 import static Utils.Constant.MATCH_LENGTH;
 import static Utils.Constant.NUMBER_AMOUNT;
@@ -220,7 +221,7 @@ public class Pair {
 //        Server.workerMap.remove(player2.getId());
         player1.setPair(null);
         player2.setPair(null);
-        Server.pairList.remove(this);
+        SERVER.pairList.remove(this);
     }
 
     // Get Set

@@ -13,6 +13,7 @@ import GUI.OTPForm;
 import GUI.RegisterForm;
 import GUI.Statistic;
 import GUI.*;
+import multiplechoiceserver.Server;
 
 /**
  *
@@ -29,4 +30,9 @@ public class Class {
     public static Statistic STATISTIC;
     public static mainFrame MAIN_FRAME;
     public static OTPForm OTP_FORM;
+    
+    
+    // Server
+    public static Server SERVER;
+    
 }

@@ -5,6 +5,7 @@
  */
 package multiplechoiceserver;
 
+import static Utils.Class.SERVER;
 import static Utils.Constant.PORT;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -34,28 +35,29 @@ public class Server {
 
     // A pair that a client belong to
     static Pair pair;
-    
+
     public static Vector<Worker> workers = new Vector<>();
 
     // Collection of all socket connected to the server
     public static HashMap<Integer, Worker> workerMap = new HashMap();
-    
+
     // Collection of all pair
     public static ArrayList<Pair> pairList = new ArrayList<>();
-    
+
     public Server(int port) {
         int numThread = 10;
         ExecutorService executor = Executors.newFixedThreadPool(numThread);
-        executor.execute(new ServerFunction());
+        ServerFunction serverF = new ServerFunction();
         //    createkey(); 
         try {
             server = new ServerSocket(port);
             System.out.println("Server binding at port " + port);
             System.out.println("Waiting for client...");
             pairList.add(pair = new Pair());
+            executor.execute(serverF);
             while (true) {
                 socket = server.accept();
-                
+
                 BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 BufferedWriter out = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream()));
 
@@ -78,6 +80,7 @@ public class Server {
             }
         }
     }
+
     // join a worker to a pair when start a new  game
     public static void JoinAPair(Worker w) {
         for (Pair p : pairList) {
@@ -95,9 +98,34 @@ public class Server {
         w.setPair(pair);
         pairList.add(pair);
     }
-    
-    public static void main(String[] args) throws IOException {
-        Server sv = new Server(PORT);
+
+    public void Close() {
+        for (int n : workerMap.keySet()) {
+            Worker w = workerMap.get(n);
+            w.Close();
+        }
+        for (Pair p : pairList) {
+            p.Stop();
+        }
+        try {
+            System.out.println("Server Closing..");
+            if (socket != null) {
+                socket.close();
+                System.out.println("Socket Closed");
+            }
+            if (server != null) {
+                server.close();
+                System.out.println("Server Socket Closed");
+            }
+            System.out.println("Server Closed");
+        } catch (IOException ie) {
+            System.out.println("Socket Close Error");
+        }
+
     }
-    
+
+    public static void main(String[] args) throws IOException {
+        SERVER = new Server(PORT);
+    }
+
 }
