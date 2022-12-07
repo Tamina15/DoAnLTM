@@ -243,8 +243,11 @@ public class EditInforForm extends JFrame {
     }
 
     public void EditInfoSuccess() {
-        JOptionPane.showMessageDialog(contentPane, "Edit successfully.", "Information", JOptionPane.INFORMATION_MESSAGE);
-        dispose();
+        System.out.println("bofeore");
+        JOptionPane.showMessageDialog(contentPane, "Đăng ký thất bại. Vui lòng thử lại", "Error Message", JOptionPane.ERROR_MESSAGE);
+        System.out.println("Edit info success");
+//        JOptionPane.showMessageDialog(contentPane, "Edit successfully.", "Information", JOptionPane.ERROR_MESSAGE);
+        //dispose();
     }
 
     public void EditInfoFail() {

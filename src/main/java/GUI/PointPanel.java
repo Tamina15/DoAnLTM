@@ -1,5 +1,9 @@
 package GUI;
 
+
+import static GUI.HomeSelection.client;
+import static Utils.Class.HOME_SELECTION;
+import static Utils.Class.MAIN_FRAME;
 import static Utils.Constant.PANEL_WIDTH;
 import static Utils.Constant.TILE_SIZE;
 
@@ -19,7 +23,7 @@ import javax.swing.JPanel;
 public class PointPanel extends JPanel {
 
     static int height = TILE_SIZE;
-    private JButton powerUp;
+    private JButton powerUp, btnReturn;
 
     private JLabel number, time, player1, player2;
     ImageIcon ic;
@@ -34,12 +38,12 @@ public class PointPanel extends JPanel {
         this.setLayout(layout);
         init();
         this.setVisible(true);
-
     }
 
     protected final void init() {
         ic = new ImageIcon();
         powerUp = new JButton();
+        btnReturn = new JButton();
         number = new JLabel();
         time = new JLabel();
         player1 = new JLabel();
@@ -65,13 +69,30 @@ public class PointPanel extends JPanel {
         time.setFont(font);
         time.setForeground(Color.WHITE);
 
+        imageIcon = new ImageIcon(new ImageIcon(PointPanel.class.getResource("/images/return-icon.png")).getImage());
+        btnReturn.setIcon(imageIcon);
+        btnReturn.setFont(font);
+        btnReturn.setForeground(Color.WHITE);
+        powerUp.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if (MAIN_FRAME.ready) {
+                    mainFrame.Surrender();
+                } else {
+                    mainFrame.Abort();
+                    HOME_SELECTION = new HomeSelection(client);
+                    HOME_SELECTION.setVisible(true);
+                    MAIN_FRAME.dispose();
+                }
+            }
+        });
         number.setForeground(Color.WHITE);
         number.setFont(font);
         number.setBackground(background);
 
         player1.setText("Player 1: ");
         player2.setText("Player 2: ");
-
+        this.add(btnReturn);
         this.add(powerUp);
         this.add(player1);
         this.add(number);

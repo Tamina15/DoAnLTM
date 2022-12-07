@@ -56,6 +56,15 @@ public class Pair {
         }
     }
 
+    public void RemoveClient(Worker t) {
+        if (player1.getId() == t.getId()) {
+            player1 = null;
+        } else if (player2.getId() == t.getId()) {
+            player2 = null;
+        }
+        isFull = false;
+    }
+
     public void StartGame() {
         // Kiểm tra số lượng
         if (isFull) {
@@ -202,6 +211,7 @@ public class Pair {
 //        Result();
     }
 // Dùng che đồi phương 3 giây
+
     void UsePower(Worker w) {
         if (w.getId() == player1.getId()) {
             write(player2, "blackout", "");

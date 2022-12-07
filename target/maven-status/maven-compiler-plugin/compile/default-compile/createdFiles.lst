@@ -33,6 +33,7 @@ DTO\Users.class
 multiplechoiceserver\Pair$1.class
 GUI\Statistic$6.class
 GUI\LoginForm.class
+GUI\PointPanel$2.class
 Utils\Constant.class
 GUI\Statistic.class
 DTO\Number.class

@@ -299,7 +299,7 @@ public class RegisterForm extends JFrame {
 //        HOME_SELECTION = new HomeSelection(client);
 //        HOME_SELECTION.setVisible(true);
 //        HOME_SELECTION.setEnabled(true);
-//        closeThisWindow();
+        closeThisWindow();
     }
 
     public void EmailKhongHopLe() {

@@ -189,6 +189,12 @@ public class mainFrame extends JFrame implements Runnable {
     public static void Click(int number) {
         client.send("click", String.valueOf(number));
     }
+    public static void Surrender(){
+        client.sendOnlyCmd("surrender");
+    }
+        public static void Abort(){
+        client.sendOnlyCmd("AbortGame");
+    }
 
     public void Result(String result) {
         System.out.println("Result = " + result);
