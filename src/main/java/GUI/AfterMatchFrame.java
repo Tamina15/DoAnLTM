@@ -1,5 +1,6 @@
 package GUI;
 
+import static Utils.Class.HOME;
 import static Utils.Class.HOME_SELECTION;
 import static Utils.Constant.PANEL_HEIGHT;
 import static Utils.Constant.PANEL_WIDTH;
@@ -169,14 +170,14 @@ class AfterMatchPanel extends JPanel {
     }
 
     private void btnPlayAgainMouseClicked(java.awt.event.MouseEvent evt) {
-        HOME_SELECTION = new HomeSelection(client);
+    	HOME_SELECTION  = new HomeSelection(client);
         HOME_SELECTION.setVisible(true);
         frame.dispose();
     }
 
     private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {
-        HOME_SELECTION  = new HomeSelection(client);
-        HOME_SELECTION.setVisible(true);
+        HOME = new Home(client);
+        HOME.setVisible(true);
         frame.dispose();
     }
 
