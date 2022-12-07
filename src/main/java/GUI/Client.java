@@ -10,7 +10,8 @@ import static Utils.Class.HOME;
 import static Utils.Class.LOGIN_FORM;
 import static Utils.Class.MAIN_FRAME;
 import static Utils.Class.REGISTER_FORM;
-import static Utils.Class.*;
+import static Utils.Class.OTP_FORM;
+import static Utils.Class.STATISTIC;
 
 import static Utils.Constant.ADDRESS;
 import static Utils.Constant.PORT;
@@ -39,7 +40,6 @@ public class Client {
     public BufferedReader in = null;
     private Scanner scanner = null;
     private boolean flag = true;
-
     byte[] ServerpubKeyByte;
     SecretKey secKey;
     ObjectInputStream objectInput;
@@ -113,20 +113,20 @@ public class Client {
                             break;
                         // Nếu đăng ký thành công
                         case "signupsuccess":
-                        	OTP_FORM.TrueOTP();
+                        	OTP_FORM.OTPHopLe();
                             break;
                         // Nếu email hợp lệ
                         case "emailhople":
                         	REGISTER_FORM.EmailHopLe();
                             break;
                         //Nếu otp hết hạn
-                        case "otphethan":
-                        	OTP_FORM.TimeoutOTP();;
-                            break;
-                          //Nếu otp sai
-                        case "otpsai":
-                        	OTP_FORM.WrongOTP();
-                            break;
+//                        case "otphethan":
+//                        	OTP_FORM.TimeoutOTP();
+//                            break;
+//                          //Nếu otp sai
+//                        case "otpsai":
+//                        	OTP_FORM.WrongOTP();
+//                            break;
                         // Nếu sql lỗi trong khi đăng ký
                         case "signupfail":
                             REGISTER_FORM.SignUpFail();

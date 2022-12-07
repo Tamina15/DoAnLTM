@@ -296,7 +296,7 @@ public class RegisterForm extends JFrame {
     public void EmailHopLe() {
     	OTP_FORM= new OTPForm(client);
     	OTP_FORM.setVisible(true);
-//        closeThisWindow();
+       closeThisWindow();
     }
 
     public void EmailKhongHopLe() {

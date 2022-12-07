@@ -1,135 +1,126 @@
 package GUI;
 
-import javax.swing.JTextField;
-import java.awt.BorderLayout;
+import static Utils.Class.*;
+import java.awt.Color;
+import java.awt.Cursor;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Date;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import static Utils.Class.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
-import java.awt.Color;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.text.DecimalFormat;
+import net.sourceforge.jdatepicker.impl.JDatePanelImpl;
+import net.sourceforge.jdatepicker.impl.JDatePickerImpl;
+import net.sourceforge.jdatepicker.impl.UtilDateModel;
 
 public class OTPForm extends JFrame {
-	private Client cl;
+
+	public Client client;
 	private JPanel contentPane;
+	int posX, posY;
+	int widthLeft;
 	private JTextField txtOTP;
+	private JButton btnSubmit;
+	private SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	public String mailregex = "^[\\w-_\\.+]*[\\w-_\\.]\\@([\\w]+\\.)+[\\w]+[\\w]$";
+	private JButton btnHuy;
 
-	Timer timer;
-	int second = 0;
-	int minute = 10;
-	String ddSecond, ddMinute;
-	DecimalFormat dFormat = new DecimalFormat("00");
-	private JLabel lblTime;
-
-	public void countdownTimer() {
-		timer = new Timer(1000, new ActionListener() {
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-
-				second--;
-				ddSecond = dFormat.format(second);
-				ddMinute = dFormat.format(minute);
-				lblTime.setText(ddMinute + ":" + ddSecond);
-
-				if (second == -1) {
-					second = 59;
-					minute--;
-					ddSecond = dFormat.format(second);
-					ddMinute = dFormat.format(minute);
-					lblTime.setText(ddMinute + ":" + ddSecond);
-				}
-
-				if (minute == 0 && second == 0) {
-					timer.stop();
-				}
-			}
-		});
-	}
-
-	public OTPForm(Client cl) {
-		this.cl = cl;
+	public OTPForm(Client client) {
+		this.client = client;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(50, 100, 300, 200);
+		setBounds(50, 100, 633, 350);
 		setUndecorated(true);
 		setLocationRelativeTo(null);
-		initComponents(cl);
+		initComponens(client); // initComponens
+//		addEvents();
 	}
 
-	private void initComponents(Client cl) {
+	private void initComponens(Client client) {
 		contentPane = new JPanel();
 		contentPane.setLayout(null);
 		setContentPane(contentPane);
 
-		JLabel lblNewLabel = new JLabel("Vui lòng nhập mã OTP từ gmail bạn vừa đăng ký");
-		lblNewLabel.setForeground(new Color(0, 0, 0));
-		lblNewLabel.setBackground(new Color(255, 153, 255));
-		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		lblNewLabel.setBounds(10, 24, 262, 44);
-		contentPane.add(lblNewLabel);
+		JLabel lblSignUp = new JLabel("Mã OTP đã được gửi vào email của bạn");
+		lblSignUp.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+		lblSignUp.setForeground(new Color(0, 0, 0));
+		lblSignUp.setFont(new Font("Segoe UI", Font.PLAIN, 18));
+		lblSignUp.setBounds(129, 10, 350, 30);
+		lblSignUp.setHorizontalAlignment(SwingConstants.CENTER);
+		contentPane.add(lblSignUp);
 
 		txtOTP = new JTextField();
-		txtOTP.setBounds(97, 101, 96, 20);
+		txtOTP.setBackground(new Color(0, 0, 0));
+		txtOTP.setForeground(new Color(0, 0, 0));
+		txtOTP.setOpaque(false);
+		txtOTP.setFont(new Font("Segoe UI", Font.PLAIN, 15));
+		txtOTP.setDisabledTextColor(new Color(0, 139, 139));
+		txtOTP.setCaretColor(new Color(0, 0, 0));
+		txtOTP.setBounds(223, 112, 206, 30);
 		contentPane.add(txtOTP);
 		txtOTP.setColumns(10);
 
-		JButton btnXacNhan = new JButton("Xác nhận");
-		btnXacNhan.setBounds(201, 149, 89, 23);
-		btnXacNhan.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				try {
-					cl.sendOTP(String.valueOf(txtOTP.getText()));
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+		UtilDateModel modeStart = new UtilDateModel();
+		JDatePanelImpl datePanelStart = new JDatePanelImpl(modeStart);
 
+		btnSubmit = new JButton("Xác nhận");
+		btnSubmit.setForeground(new Color(255, 255, 255));
+		btnSubmit.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+		btnSubmit.setBackground(new Color(51, 51, 102));
+		btnSubmit.setFont(new Font("Segoe UI", Font.BOLD, 14));
+		btnSubmit.setBounds(349, 278, 150, 40);
+		btnSubmit.addActionListener((ActionEvent e) -> {
+			btnSubmitActionPerform(e);
+		});
+		contentPane.add(btnSubmit);
+
+		btnHuy = new JButton("Hủy");
+		btnHuy.setBounds(113, 289, 89, 23);
+		btnHuy.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				closeThisWindow();
 			}
 		});
-		contentPane.add(btnXacNhan);
-
-		JButton btnHuy = new JButton("Hủy");
-		btnHuy.setBounds(10, 149, 89, 23);
-		btnXacNhan.addMouseListener(new MouseAdapter() {
-
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		CloseThisFrame();
+		contentPane.add(btnHuy);
+		widthLeft = (int) contentPane.getPreferredSize().getWidth();
 	}
 
-	});contentPane.add(btnHuy);}
+	public void btnSubmitActionPerform(ActionEvent e) {
+		try {
+			closeThisWindow();
+			client.sendOTP(String.valueOf(txtOTP.getText()));
 
-	public void CloseThisFrame() {
+		} catch (IOException e1) {
+			JOptionPane.showMessageDialog(contentPane, "Somthing wrong", "Error Message", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+
+	public void closeThisWindow() {
 		this.dispose();
-		this.setVisible(false);
-		this.setEnabled(false);
 	}
 
-	public void WrongOTP() {
-		JOptionPane.showMessageDialog(contentPane, "Wrong OTP! Please try again!", "Error", JOptionPane.ERROR_MESSAGE);
+	public void OTPHopLe() {
+		LoginForm lg = new LoginForm(client);
+		lg.setVisible(true);
 	}
 
-	public void TimeoutOTP() {
-		JOptionPane.showMessageDialog(contentPane, "OTP code was expired! Please try again!", "Error",
-				JOptionPane.ERROR_MESSAGE);
-		CloseThisFrame();
-	}
-
-	public void TrueOTP() {
-		CloseThisFrame();
-		REGISTER_FORM.closeThisWindow();
-		HOME_SELECTION = new HomeSelection(cl);
-		HOME_SELECTION.setVisible(true);	
-	}
 }
