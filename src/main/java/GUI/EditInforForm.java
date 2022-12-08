@@ -5,6 +5,8 @@ import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import java.io.IOException;
 
@@ -12,6 +14,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -219,28 +223,24 @@ public class EditInforForm extends JFrame {
         lbl_IconDeliveryman.setIcon(new ImageIcon(LoginForm.class.getResource("/images/background_home.png")));
         lbl_IconDeliveryman.setBounds(0, 0, 633, 350);
         contentPane.add(lbl_IconDeliveryman);
-//        addWindowListener(new WindowAdapter() {
-//            @Override
-//            public void windowOpened(WindowEvent e) {
-//                try {
-//                    client.getInfoOfUser();
-//                } catch (IOException ex) {
-//                    Logger.getLogger(EditInforForm.class.getName()).log(Level.SEVERE, null, ex);
-//                }
-//            }
-//        });
-//call();
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowOpened(WindowEvent e) {
+                try {
+                    client.getInfoOfUser();
+                } catch (IOException ex) {
+                    Logger.getLogger(EditInforForm.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
     }
 
     public void EditInfoSuccess() {
         JOptionPane.showMessageDialog(contentPane, "Edit successfully.", "Information", JOptionPane.ERROR_MESSAGE);
-        this.dispose();
     }
 
     public void EditInfoFail() {
-        Client.call();
-//JOptionPane.showMessageDialog(null, "Something wrong!! Please try later");
-//        JOptionPane.showMessageDialog(null, "Something wrong!! Please try later", "Error Message", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Something wrong!! Please try later", "Error Message", JOptionPane.ERROR_MESSAGE);
     }
 
     public void closeThisWindow() {
