@@ -1,7 +1,6 @@
 package GUI;
 
 import static Utils.Constant.FPS;
-import static Utils.Constant.MATCH_LENGTH;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,7 +20,6 @@ public class mainFrame extends JFrame implements Runnable {
     public static String FPScount = "NaN";
 
     public static double delta = 0;
-    public static int time = MATCH_LENGTH;
 
     public boolean ready;
 
@@ -33,6 +31,8 @@ public class mainFrame extends JFrame implements Runnable {
     public static int currentNumber;
     static boolean blackout = false;
 
+    public static int blackoutTime;
+    public static int amount;
     mainFrame() {
 
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -40,7 +40,7 @@ public class mainFrame extends JFrame implements Runnable {
 
         ready = false;
 
-        gamePanel = new GamePanel();
+        //gamePanel = new GamePanel();
         pointPanel = new PointPanel();
 
         getContentPane().setLayout(new BorderLayout());
@@ -66,7 +66,7 @@ public class mainFrame extends JFrame implements Runnable {
 
         ready = false;
 
-        gamePanel = new GamePanel();
+        //gamePanel = new GamePanel();
         pointPanel = new PointPanel();
 
         getContentPane().setLayout(new BorderLayout());
@@ -132,6 +132,7 @@ public class mainFrame extends JFrame implements Runnable {
         } catch (InterruptedException e) {
 
         } finally {
+            gamePanel = new GamePanel();
             c.add(gamePanel, BorderLayout.CENTER);
             this.pack();
         }
@@ -156,9 +157,9 @@ public class mainFrame extends JFrame implements Runnable {
             }
             if (timer >= 1000000000) {
                 if (blackout) {
-                    time--;
+                    blackoutTime--;
                 }
-                if (time <= 0) {
+                if (blackoutTime <= 0) {
                     blackout = false;
                 }
                 FPScount = "" + count;
@@ -177,7 +178,7 @@ public class mainFrame extends JFrame implements Runnable {
         pointPanel.setNumber(number);
     }
 
-    void setNumber(String string, Color c) {
+    public void setNumber(String string, Color c) {
         gamePanel.Fill(currentNumber, c);
     }
 
@@ -189,10 +190,12 @@ public class mainFrame extends JFrame implements Runnable {
     public static void Click(int number) {
         client.send("click", String.valueOf(number));
     }
-    public static void Surrender(){
+
+    public static void Surrender() {
         client.sendOnlyCmd("surrender");
     }
-        public static void Abort(){
+
+    public static void Abort() {
         client.sendOnlyCmd("AbortGame");
     }
 
@@ -206,13 +209,9 @@ public class mainFrame extends JFrame implements Runnable {
         client.sendOnlyCmd("UsePower");
     }
 
-    public static void main(String[] args) {
-        mainFrame mainFrame = new mainFrame();
-    }
-
-    void Blackout() {
+    public void Blackout() {
         blackout = true;
-        time = 3;
+        blackoutTime = 3;
     }
 
 }

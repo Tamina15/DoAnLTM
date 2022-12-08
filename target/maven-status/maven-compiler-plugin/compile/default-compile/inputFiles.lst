@@ -5,7 +5,6 @@ C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\DTO\Games.
 C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\GUI\GamePanel.java
 C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\GUI\PointPanel.java
 C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\Utils\Constant.java
-C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\Utils\Util.java
 C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\BLL\GamesBLL.java
 C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\GUI\LoginForm.java
 C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\multiplechoiceserver\Pair.java
@@ -16,7 +15,7 @@ C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\GUI\EditIn
 C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\DTO\Users.java
 C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\GUI\HomeSelection.java
 C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\BLL\UsersBLL.java
-C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\GUI\Login.java
+C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\GUI\OTPForm.java
 C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\multiplechoiceserver\Server.java
 C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\Utils\Class.java
 C:\Users\HP\OneDrive\Documents\NetBeansProjects\DoAnLTM\src\main\java\DAL\UsersDAL.java

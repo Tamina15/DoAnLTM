@@ -36,7 +36,7 @@ public class GamePanel extends JPanel {
         rand = new Random();
         
         int map[][] = new int[ROW][COLUMN];
-        for (int i = 0; i < NUMBER_AMOUNT; i++) {
+        for (int i = 0; i < mainFrame.amount; i++) {
             
             int mRow = rand.nextInt(ROW);
             int mCol = rand.nextInt(COLUMN);

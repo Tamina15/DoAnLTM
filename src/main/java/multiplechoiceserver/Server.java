@@ -5,10 +5,7 @@
  */
 package multiplechoiceserver;
 
-import static Utils.Class.SERVER;
 import static Utils.Constant.PORT;
-import static Utils.Constant.MATCH_LENGTH;
-import static Utils.Constant.NUMBER_AMOUNT;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -46,9 +43,10 @@ public class Server {
     // Collection of all pair
     public static ArrayList<Pair> pairList = new ArrayList<>();
 
+    public static int Amount = 20;
+    public static int MatchLength = 60;
+
     public Server(int port) {
-        NUMBER_AMOUNT = 20;
-        MATCH_LENGTH = 60;
         int numThread = 10;
         ExecutorService executor = Executors.newFixedThreadPool(numThread);
         ServerFunction serverF = new ServerFunction();
@@ -129,7 +127,7 @@ public class Server {
     }
 
     public static void main(String[] args) throws IOException {
-        SERVER = new Server(PORT);
+        Server SERVER = new Server(PORT);
     }
 
 }

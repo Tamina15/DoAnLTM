@@ -65,8 +65,8 @@ public class ServerFunction implements Runnable {
                 System.out.println("Error: Amount of Number per Match must be a larger than 0 integer");
                 return;
             }
-            Utils.Constant.NUMBER_AMOUNT = amount;
-            System.out.println("Changed the number/game to " + Utils.Constant.NUMBER_AMOUNT + " numbers");
+            Server.Amount = amount;
+            System.out.println("Changed the number/game to " + Server.Amount + " numbers");
         } catch (NumberFormatException e) {
             System.out.println("Wrong Input. Amount of Number per Match must be a larger than zero Integer.");
         }
@@ -79,8 +79,8 @@ public class ServerFunction implements Runnable {
                 System.out.println("Error: Time per Match must be a larger-than-zero integer.");
                 return;
             }
-            Utils.Constant.MATCH_LENGTH = time;
-            System.out.println("Changed the time/game to " + Utils.Constant.MATCH_LENGTH + " seconds.");
+            Server.MatchLength = time;
+            System.out.println("Changed the time/game to " + Server.MatchLength + " seconds.");
         } catch (NumberFormatException e) {
             System.out.println("Wrong Input. Time per Match must be a larger-than-zero Integer.");
         }

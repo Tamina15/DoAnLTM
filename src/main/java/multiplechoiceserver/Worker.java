@@ -100,6 +100,7 @@ public class Worker implements Runnable {
                 input = (in.readLine());
                 System.out.println("Server received: " + input + " from " + socket.toString() + " # Client " + myName);
                 if (input.equals("exit")) {
+                    send("bye");
                     Close();
                     return;
                 }
@@ -156,7 +157,7 @@ public class Worker implements Runnable {
             // Thoát
             case "LogOut":
                 this.myName = "anonymos";
-                Close();
+                
                 break;
 
             // Nếu client nhấn vào một số trong trò chơi

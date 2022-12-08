@@ -1,11 +1,15 @@
 package multiplechoiceserver;
 
-import static Utils.Class.SERVER;
+import DTO.Games;
 import static Utils.Constant.LUCK;
-import static Utils.Constant.MATCH_LENGTH;
-import static Utils.Constant.NUMBER_AMOUNT;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -21,13 +25,15 @@ public class Pair {
 
     public int currentNumber;
     private static int currentIndex = 0;
-    public static int[] array = new int[NUMBER_AMOUNT];
+    public static int[] array = new int[Server.Amount];
     Random rand = new Random();
 
-    public int matchTime = MATCH_LENGTH;
+    public int matchTime = Server.MatchLength;
     int Checked_Num;
     private boolean isGameStarted = false;
     boolean lucky = false;
+
+    Games game = new Games();
 
     public Pair() {
         RandomizeArray();
@@ -63,6 +69,7 @@ public class Pair {
             player2 = null;
         }
         isFull = false;
+        isGameStarted = false;
     }
 
     public void StartGame() {
@@ -71,13 +78,17 @@ public class Pair {
             // Khởi tạo mảng
             RandomizeArray();
             isGameStarted = true;
+
+            write(player1, "NumMatch", String.valueOf(Server.Amount));
+            write(player2, "NumMatch", String.valueOf(Server.Amount));
             // bat19 đầu game
             write(player1, "gamestart", "");
             write(player2, "gamestart", "");
+            game.setTimeStart(new Date());
             // gửi số đầu tiên
             NextNumber();
             // bộ đếm thời gian
-            Thread game = new Thread() {
+            Thread timer = new Thread() {
                 @Override
                 public void run() {
                     double drawInterval = 1000000000;
@@ -101,7 +112,7 @@ public class Pair {
                     }
                 }
             };
-            game.start();
+            timer.start();
         }
     }
 
@@ -122,7 +133,7 @@ public class Pair {
 
     public void NextNumber() {
         if (isGameStarted) {
-            if (currentIndex + 1 <= NUMBER_AMOUNT) {
+            if (currentIndex + 1 <= Server.Amount) {
                 currentNumber = array[currentIndex++];
                 // Kiểm tra số may mắn
                 int luck = rand.nextInt() % 100;
@@ -142,42 +153,142 @@ public class Pair {
 // Kết thúc trận đấu
 
     public void Result() {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String Timestart = df.format(game.getTimeStart());
+        Timestart = Timestart.substring(0, 10);
+        Connection con = ConnectionDB.Connect();
+        Statement st;
+
         if (player1.getScore() > player2.getScore()) {
             write(player1, "result", "You Win");
             write(player2, "result", "You Lose");
+            game.setWinner(player1.getMyName());
+            String sql = "Insert into game values('" + player1.createOTP(6) + "', '" + Timestart + "', '" + game.getWinner() + "')";
+            String sql2 = "Update user Set Total_match=Total_match+1 Where Email='" + player1.getMyName() + "' OR Email='" + player2.getMyName() + "'";
+            try {
+                st = con.createStatement();
+                st.execute(sql);
+                st.execute(sql2);
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         if (player1.getScore() < player2.getScore()) {
             write(player1, "result", "You Lose");
             write(player2, "result", "You Win");
+            game.setWinner(player2.getMyName());
+
+            String sql = "Insert into game values('" + player1.createOTP(6) + "', '" + Timestart + "', '" + game.getWinner() + "')";
+            String sql2 = "Update user Set Total_match=Total_match+1 Where Email='" + player1.getMyName() + "' OR Email='" + player2.getMyName() + "'";
+            try {
+                st = con.createStatement();
+                st.execute(sql);
+                st.execute(sql2);
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         if (player1.getScore() == player2.getScore()) {
             write(player1, "result", "Draw");
             write(player2, "result", "Draw");
+            String sql2 = "Update user Set Total_match=Total_match+1 Where Email='" + player1.getMyName() + "' OR Email='" + player2.getMyName() + "'";
+            try {
+                st = con.createStatement();
+                st.execute(sql2);
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
+        player1.setScore(0);
+        player2.setScore(0);
+
         isGameStarted = false;
     }
 
 // Nếu một trong hai socket đóng kết nối
     public void CallForStop() {
         isGameStarted = false;
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String Timestart = df.format(game.getTimeStart());
+        Timestart = Timestart.substring(0, 10);
+        Connection con = ConnectionDB.Connect();
+        Statement st;
         if (player1.getSocket().isClosed()) {
             write(player2, "result", "You Win");
+            game.setWinner(player2.getMyName());
+            player2.setScore(0);
+
+            String sql = "Insert into game values('" + player2.createOTP(6) + "', '" + Timestart + "', '" + game.getWinner() + "')";
+            try {
+                st = con.createStatement();
+                st.execute(sql);
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         if (player2.getSocket().isClosed()) {
             write(player1, "result", "You Win");
+            game.setWinner(player1.getMyName());
+            player1.setScore(0);
+
+            String sql = "Insert into game values('" + player1.createOTP(6) + "', '" + Timestart + "', '" + game.getWinner() + "')";
+            try {
+                st = con.createStatement();
+                st.execute(sql);
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
         Stop();
     }
 
     // Nếu một bên dừng trò chơi
     public void Surrender(Worker w) {
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        String Timestart = df.format(game.getTimeStart());
+        Timestart = Timestart.substring(0, 10);
+        Connection con = ConnectionDB.Connect();
+        Statement st;
         if (w.getId() == player1.getId()) {
             write(player1, "result", "You Lose");
             write(player2, "result", "You Win");
+            game.setWinner(player2.getMyName());
+            player2.setScore(0);
+
+            String sql = "Insert into game values('" + player2.createOTP(6) + "', '" + Timestart + "', '" + game.getWinner() + "')";
+            String sql2 = "Update user Set Total_match=Total_match+1 Where Email='" + player1.getMyName() + "' OR Email='" + player2.getMyName() + "'";
+            try {
+                st = con.createStatement();
+                st.execute(sql);
+                st.execute(sql2);
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         } else if (w.getId() == player2.getId()) {
             write(player1, "result", "You Win");
             write(player2, "result", "You Lose");
+            game.setWinner(player1.getMyName());
+            player1.setScore(0);
+
+            String sql = "Insert into game values('" + player2.createOTP(6) + "', '" + Timestart + "', '" + game.getWinner() + "')";
+            String sql2 = "Update user Set Total_match=Total_match+1 Where Email='" + player1.getMyName() + "' OR Email='" + player2.getMyName() + "'";
+            try {
+                st = con.createStatement();
+                st.execute(sql);
+                st.execute(sql2);
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
+        isGameStarted = false;
+
         Stop();
     }
 
@@ -207,7 +318,6 @@ public class Pair {
         // số tiếp the
         NextNumber();
         Checked_Num++;
-//        Result();
     }
 // Dùng che đồi phương 3 giây
 
@@ -226,8 +336,7 @@ public class Pair {
 // KẾt thúc trò chơi
     public void Stop() {
         isGameStarted = false;
-//        Server.workerMap.remove(player1.getId());
-//        Server.workerMap.remove(player2.getId());
+        isFull = false;
         player1.setPair(null);
         player2.setPair(null);
         Server.pairList.remove(this);

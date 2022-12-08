@@ -104,9 +104,9 @@ public class Client {
                         case "emailhople":
                             REGISTER_FORM.EmailHopLe();
                             break;
-                            // nếu mã OTP đúng
+                        // nếu mã OTP đúng
                         case "signupsuccess":
-                        	OTP_FORM.OTPhopLe();
+                            OTP_FORM.OTPhopLe();
                             break;
                         // Nếu sql lỗi trong khi đăng ký
                         case "signupfail":
@@ -134,6 +134,9 @@ public class Client {
                             break;
                         //
                         case "wait":
+                            break;
+                        case "NumMatch":
+                            mainFrame.amount = Integer.parseInt(array[1]);
                             break;
                         // Bắt đầu game
                         case "gamestart":
@@ -241,7 +244,7 @@ public class Client {
     }
 
     public void sendOTP(String otp) {
-        sendOnlyCmd(otp);      
+        sendOnlyCmd(otp);
     }
 
     public void signup(String email, char[] passwd, String name, String gender, String DoB) {

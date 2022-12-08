@@ -91,6 +91,7 @@ public class Home extends JFrame {
         btnQuit.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                client.sendOnlyCmd("exit");
                 System.exit(0);
             }
         });

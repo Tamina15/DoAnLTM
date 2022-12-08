@@ -29,7 +29,7 @@ public class GamesDAL {
 				Games Games = new Games();
 				Games.setCode(rs.getString("Code"));
                                 Games.setTimeStart(rs.getDate("Time_start"));
-                                Games.setWinner(rs.getInt("Winner"));
+                                Games.setWinner(rs.getString("Winner"));
 				listGames.add(Games);
 			}
 			

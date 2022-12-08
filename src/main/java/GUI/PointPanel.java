@@ -78,6 +78,7 @@ public class PointPanel extends JPanel {
             public void mouseClicked(MouseEvent e) {
                 if (MAIN_FRAME.ready) {
                     mainFrame.Surrender();
+                    MAIN_FRAME.gamePanel.setEnabled(false);
                 } else {
                     mainFrame.Abort();
                     HOME_SELECTION = new HomeSelection(client);

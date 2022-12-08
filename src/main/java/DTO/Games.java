@@ -13,9 +13,9 @@ import java.util.Date;
 public class Games {
     private String code;
     private Date timeStart;
-    private int winner;
+    private String winner;
 
-    public Games(String code, Date timeStart, int winner) {
+    public Games(String code, Date timeStart, String winner) {
         this.code = code;
         this.timeStart = timeStart;
         this.winner = winner;
@@ -41,11 +41,11 @@ public class Games {
         this.timeStart = timeStart;
     }
 
-    public int getWinner() {
+    public String getWinner() {
         return winner;
     }
 
-    public void setWinner(int winner) {
+    public void setWinner(String winner) {
         this.winner = winner;
     }
     
