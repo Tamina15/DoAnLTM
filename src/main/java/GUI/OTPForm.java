@@ -121,9 +121,9 @@ public class OTPForm extends JFrame {
     }
 
     public void CloseThisFrame() {
-        this.dispose();
         this.setVisible(false);
         this.setEnabled(false);
+        this.dispose();
     }
 
     public void WrongOTP() {
