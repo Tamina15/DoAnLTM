@@ -34,7 +34,7 @@ public class PointPanel extends JPanel {
         this.setBackground(background);
         FlowLayout layout = new FlowLayout();
         layout.setAlignment(FlowLayout.CENTER);
-        layout.setHgap(50);
+        layout.setHgap(100);
         this.setLayout(layout);
         init();
         this.setVisible(true);
@@ -73,7 +73,7 @@ public class PointPanel extends JPanel {
         btnReturn.setIcon(imageIcon);
         btnReturn.setFont(font);
         btnReturn.setForeground(Color.WHITE);
-        powerUp.addMouseListener(new MouseAdapter() {
+        btnReturn.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 if (MAIN_FRAME.ready) {

@@ -303,6 +303,7 @@ public class RegisterForm extends JFrame {
     }
 
     public void EmailKhongHopLe() {
+        Client.call();
         JOptionPane.showMessageDialog(contentPane, "Email đã có người đăng ký. Mời bạn nhập email khác", "Error Message", JOptionPane.ERROR_MESSAGE);
     }
 

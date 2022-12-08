@@ -162,10 +162,9 @@ public class Pair {
         isGameStarted = false;
         if (player1.getSocket().isClosed()) {
             write(player2, "result", "You Win");
-        } else {
-            if (player2.getSocket().isClosed()) {
-                write(player1, "result", "You Win");
-            }
+        }
+        if (player2.getSocket().isClosed()) {
+            write(player1, "result", "You Win");
         }
         Stop();
     }

@@ -6,8 +6,6 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 import java.io.IOException;
 
@@ -15,8 +13,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
@@ -78,13 +74,12 @@ public class EditInforForm extends JFrame {
 
     public EditInforForm(Client client) {
         this.client = client;
-
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(50, 100, 633, 350);
         setUndecorated(true);
         setLocationRelativeTo(null);
         initComponens();
-        setEnabled(true);
+//        setEnabled(true);
     }
 
     private void initComponens() {
@@ -108,7 +103,7 @@ public class EditInforForm extends JFrame {
         btnBack.setBackground(new Color(225, 225, 225));
         btnBack.setBounds(10, 306, 127, 30);
         btnBack.addActionListener((ActionEvent e) -> {
-            System.out.println("button back clieck");
+            System.out.println("button back click");
             HOME_SELECTION = new HomeSelection(client);
             HOME_SELECTION.setVisible(true);
             closeThisWindow();
@@ -206,20 +201,16 @@ public class EditInforForm extends JFrame {
         btnUpdateInfor.setBackground(new Color(225, 225, 225));
         btnUpdateInfor.setBounds(489, 306, 134, 30);
         btnUpdateInfor.addActionListener((ActionEvent e) -> {
-            try {
-                Date startdate = (Date) datePickerStart.getModel().getValue();
-                Date now = new Date(System.currentTimeMillis());
-                DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                String reportDate = df.format(startdate);
-                boolean flag = false;
-                String gender = String.valueOf(GenderBox.getSelectedItem());
-                if (check(txtName.getText(), reportDate) == 0) {
-                    JOptionPane.showMessageDialog(contentPane, "You must fill out all the field. Try again.", "Error Message", JOptionPane.ERROR_MESSAGE);
-                } else {
-                    client.editInfo(txtName.getText(), gender, reportDate, txt_pass.getPassword());
-                }
-            } catch (HeadlessException e1) {
-                JOptionPane.showMessageDialog(contentPane, "Something wrong!! Please try later", "Error Message", JOptionPane.ERROR_MESSAGE);
+            Date startdate = (Date) datePickerStart.getModel().getValue();
+            Date now = new Date(System.currentTimeMillis());
+            DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+            String reportDate = df.format(startdate);
+            boolean flag = false;
+            String gender = String.valueOf(GenderBox.getSelectedItem());
+            if (check(txtName.getText(), reportDate) == 0) {
+                JOptionPane.showMessageDialog(contentPane, "You must fill out all the field. Try again.", "Error Message", JOptionPane.ERROR_MESSAGE);
+            } else {
+                client.editInfo(txtName.getText(), gender, reportDate, txt_pass.getPassword());
             }
         });
         contentPane.add(btnUpdateInfor);
@@ -229,29 +220,28 @@ public class EditInforForm extends JFrame {
         lbl_IconDeliveryman.setIcon(new ImageIcon(LoginForm.class.getResource("/images/background_home.png")));
         lbl_IconDeliveryman.setBounds(0, 0, 633, 350);
         contentPane.add(lbl_IconDeliveryman);
-        addWindowListener(new WindowAdapter() {
-            @Override
-            public void windowOpened(WindowEvent e) {
-                try {
-                    client.getInfoOfUser();
-                } catch (IOException ex) {
-                    Logger.getLogger(EditInforForm.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-        });
-
+//        addWindowListener(new WindowAdapter() {
+//            @Override
+//            public void windowOpened(WindowEvent e) {
+//                try {
+//                    client.getInfoOfUser();
+//                } catch (IOException ex) {
+//                    Logger.getLogger(EditInforForm.class.getName()).log(Level.SEVERE, null, ex);
+//                }
+//            }
+//        });
+//call();
     }
 
     public void EditInfoSuccess() {
-        System.out.println("bofeore");
-        JOptionPane.showMessageDialog(contentPane, "Đăng ký thất bại. Vui lòng thử lại", "Error Message", JOptionPane.ERROR_MESSAGE);
-        System.out.println("Edit info success");
-//        JOptionPane.showMessageDialog(contentPane, "Edit successfully.", "Information", JOptionPane.ERROR_MESSAGE);
-        //dispose();
+        JOptionPane.showMessageDialog(contentPane, "Edit successfully.", "Information", JOptionPane.ERROR_MESSAGE);
+        this.dispose();
     }
 
     public void EditInfoFail() {
-        JOptionPane.showMessageDialog(contentPane, "Something wrong!! Please try later", "Error Message", JOptionPane.ERROR_MESSAGE);
+        Client.call();
+//JOptionPane.showMessageDialog(null, "Something wrong!! Please try later");
+//        JOptionPane.showMessageDialog(null, "Something wrong!! Please try later", "Error Message", JOptionPane.ERROR_MESSAGE);
     }
 
     public void closeThisWindow() {

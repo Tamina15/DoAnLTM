@@ -22,31 +22,28 @@ public class ServerFunction implements Runnable {
             String c = bai.nextLine();
             String[] mang;
             mang = c.split(":");
-            int num = c.replaceAll("[^:]", "").length();
-            if (num == 0) {
-                switch (mang[0]) {
-                    case "UserStatistic":
-                        UserStatistic();
-                        break;
-                    case "help":
-                        help();
-                        break;
-                    case "NumMatch":
-                        NumMatch(mang[1]);
-                        break;
-                    case "TimeMatch":
-                        TimeMatch(mang[1]);
-                        break;
-                    case "exit":
-                        //SERVER.Close();
-                        return;
-                    default:
-                        System.out.println("wrong syntax: ");
-                        break;
-                }
-            } else {
-                System.out.println("wrong syntax: ");
+            //int num = c.replaceAll("[^:]", "").length();
+            switch (mang[0]) {
+                case "UserStatistic":
+                    UserStatistic();
+                    break;
+                case "help":
+                    help();
+                    break;
+                case "NumMatch":
+                    NumMatch(mang[1]);
+                    break;
+                case "TimeMatch":
+                    TimeMatch(mang[1]);
+                    break;
+                case "exit":
+                    //SERVER.Close();
+                    return;
+                default:
+                    System.out.println("wrong syntax: ");
+                    break;
             }
+
         }
 
     }

@@ -26,6 +26,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.crypto.SecretKey;
+import javax.swing.JOptionPane;
 
 public class Client {
 
@@ -117,7 +118,6 @@ public class Client {
                         //Nếu otp hết hạn
                         case "otphethan":
                             OTP_FORM.TimeoutOTP();
-                            
                             break;
                         //Nếu otp sai
                         case "otpsai":
@@ -160,6 +160,7 @@ public class Client {
                             break;
                         // Điểm của người chơi 1
                         case "point1":
+                            System.out.println("Point of player 1");
                             MAIN_FRAME.pointPanel.setPlayer1(array[1]);
                             break;
                         // Điểm của người chơi 2
@@ -192,6 +193,7 @@ public class Client {
 
                 }
             } catch (IOException ex) {
+                System.out.println("Error while processing");
                 exit();
                 flag = false;
             } catch (ClassNotFoundException ex) {
@@ -382,5 +384,7 @@ public class Client {
         HOME.setVisible(true);
 
     }
-
+public static void call() {
+        JOptionPane.showMessageDialog(null, "Edit successfully.", "Information", JOptionPane.ERROR_MESSAGE);
+    }
 }

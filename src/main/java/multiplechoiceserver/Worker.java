@@ -65,11 +65,13 @@ public class Worker implements Runnable {
     public String myName;
     SecretKey secKey;
     int status = -1;
-    
+
     private UsersBLL usersBLL;
-    
+
     ObjectOutput objectOutput;
 //    ObjectInputStream objectInput;
+    // A Flag to stop this thread
+    boolean flag = true;
 
     public Worker(Socket s) throws IOException {
         this.socket = s;
@@ -77,7 +79,7 @@ public class Worker implements Runnable {
         this.out = new BufferedWriter(new OutputStreamWriter(s.getOutputStream()));
         // objectInput = new ObjectInputStream(socket.getInputStream());
     }
-    
+
     public Worker(int id, Socket s, BufferedReader in, BufferedWriter out) throws IOException {
         this.socket = s;
         this.id = id;
@@ -89,11 +91,12 @@ public class Worker implements Runnable {
         this.myName = "anonymos";
         this.objectOutput = new ObjectOutputStream(socket.getOutputStream());
     }
-    
+
+    @Override
     public void run() {
         System.out.println("Client number " + id + " accepted");
         try {
-            while (!socket.isClosed()) {
+            while (flag && !socket.isClosed()) {
                 input = (in.readLine());
                 System.out.println("Server received: " + input + " from " + socket.toString() + " # Client " + myName);
                 if (input.equals("exit")) {
@@ -105,6 +108,8 @@ public class Worker implements Runnable {
             System.out.println("Closed socket for client " + myName + " " + socket.toString());
             this.myName = "anonymos";
         } catch (IOException ex) {
+            Close();
+        }finally{
             Close();
         }
     }
@@ -151,6 +156,7 @@ public class Worker implements Runnable {
             // Thoát
             case "LogOut":
                 this.myName = "anonymos";
+                Close();
                 break;
 
             // Nếu client nhấn vào một số trong trò chơi
@@ -254,7 +260,7 @@ public class Worker implements Runnable {
                     } catch (IOException e) {
                         send("otpsai");
                         e.printStackTrace();
-                        
+
                     }
                 }
             }
@@ -294,7 +300,8 @@ public class Worker implements Runnable {
             Connection con = ConnectionDB.Connect();
             Statement st = con.createStatement();
             st.execute(sql);
-            send("updateinfosuccess");
+//            send("updateinfosuccess");
+            send("updateinfoerror");
         } catch (SQLException ex) {
             checksqlerror(ex.toString());
             send("updateinfoerror");
@@ -325,7 +332,7 @@ public class Worker implements Runnable {
             Close();
         }
     }
-    
+
     public void sendObj(Vector<Vector<String>> result) {
         try {
 //                synchronized (objectOutput) {
@@ -336,7 +343,7 @@ public class Worker implements Runnable {
             System.err.println(ex);
             Close();
         }
-        
+
     }
 
 //trộn
@@ -419,7 +426,7 @@ public class Worker implements Runnable {
             System.out.println("Thread  interrupted.");
         }
         sendObj(result);
-        
+
     }
     // tỉ lệ thắng
 
@@ -440,7 +447,7 @@ public class Worker implements Runnable {
             System.out.println("Thread  interrupted.");
         }
         sendObj(result);
-        
+
     }
 
     // tra cứu xếp hạng
@@ -468,107 +475,107 @@ public class Worker implements Runnable {
             sendObj(result);
         }
     }
-    
+
     public int getId() {
         return id;
     }
-    
+
     public void setId(int id) {
         this.id = id;
     }
-    
+
     public Socket getSocket() {
         return socket;
     }
-    
+
     public void setSocket(Socket socket) {
         this.socket = socket;
     }
-    
+
     public BufferedReader getIn() {
         return in;
     }
-    
+
     public void setIn(BufferedReader in) {
         this.in = in;
     }
-    
+
     public String getInput() {
         return input;
     }
-    
+
     public void setInput(String input) {
         this.input = input;
     }
-    
+
     public BufferedWriter getOut() {
         return out;
     }
-    
+
     public void setOut(BufferedWriter out) {
         this.out = out;
     }
-    
+
     public String getName() {
         return name;
     }
-    
+
     public void setName(String name) {
         this.name = name;
     }
-    
+
     public int getScore() {
         return score;
     }
-    
+
     public void setScore(int score) {
         this.score = score;
     }
-    
+
     public Pair getPair() {
         return pair;
     }
-    
+
     public void setPair(Pair pair) {
         this.pair = pair;
     }
-    
+
     public String getMyName() {
         return myName;
     }
-    
+
     public void setMyName(String myName) {
         this.myName = myName;
     }
-    
+
     public SecretKey getSecKey() {
         return secKey;
     }
-    
+
     public void setSecKey(SecretKey secKey) {
         this.secKey = secKey;
     }
-    
+
     public int getStatus() {
         return status;
     }
-    
+
     public void setStatus(int status) {
         this.status = status;
     }
-    
+
     public UsersBLL getUsersBLL() {
         return usersBLL;
     }
-    
+
     public void setUsersBLL(UsersBLL usersBLL) {
         this.usersBLL = usersBLL;
     }
-    
+
     public ObjectOutput getObjectOutput() {
         return objectOutput;
     }
-    
+
     public void setObjectOutput(ObjectOutput objectOutput) {
         this.objectOutput = objectOutput;
     }
@@ -582,13 +589,14 @@ public class Worker implements Runnable {
 //    }
     public void Close() {
 //        send("bye");
+        flag = false;
         try {
             System.out.println(name + "Connection Closing..");
             if (in != null) {
                 in.close();
                 System.out.println(name + " Socket Input Stream Closed ");
             }
-            
+
             if (out != null) {
                 out.close();
                 System.out.println(name + "Socket Out Closed ");
@@ -600,7 +608,7 @@ public class Worker implements Runnable {
                 socket.close();
                 System.out.println(name + "Socket Closed ");
             }
-            
+
         } catch (IOException ie) {
             System.out.println(name + "Socket Close Error ");
         }
@@ -613,10 +621,10 @@ public class Worker implements Runnable {
         String SMTP_SERVER = "smtp.gmail.com";
         String USERNAME = "nhichap1202@gmail.com";
         String PASSWORD = "kjjcewgwxkqkfibj";
-        
+
         String EMAIL_FROM = "nhichap1202@gmail.com";
         String EMAIL_TO_CC = "";
-        
+
         String EMAIL_SUBJECT = "Thông tin từ KTTN ";
         // String EMAIL_TEXT = "Mã OTP của bạn là: ";
         Properties prop = System.getProperties();
@@ -629,10 +637,10 @@ public class Worker implements Runnable {
         prop.put("mail.smtp.starttls.required", "true");
         prop.put("mail.smtp.ssl.protocols", "TLSv1.2");
         prop.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-        
+
         Session session = Session.getInstance(prop, null);
         Message msg = new MimeMessage(session);
-        
+
         try {
 
             // from
@@ -649,7 +657,7 @@ public class Worker implements Runnable {
 
             // content
             msg.setText(text);
-            
+
             msg.setSentDate(new Date());
 
             // Get SMTPTransport
@@ -663,12 +671,12 @@ public class Worker implements Runnable {
 
             // System.out.println("Response: " + t.getLastServerResponse());
             t.close();
-            
+
         } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
-    
+
     public String createOTP(int len) {
         String otp = "";
         String str = "0123456789";
@@ -676,7 +684,7 @@ public class Worker implements Runnable {
         for (int i = 1; i <= len; i++) {
             otp += (str.charAt((int) ((Math.random() * 10) % n)));
         }
-        
+
         return otp;
     }
 }

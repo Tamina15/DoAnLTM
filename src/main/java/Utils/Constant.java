@@ -14,8 +14,8 @@ public class Constant {
     public static final int PANEL_WIDTH = TILE_SIZE * COLUMN;
     public static final int PANEL_HEIGHT = TILE_SIZE * ROW;
 
-    public static int NUMBER_AMOUNT = 10;
-    public static int MATCH_LENGTH = 60;
+    public static int NUMBER_AMOUNT;
+    public static int MATCH_LENGTH;
     public static String REMAINING_TIME;
     public static int LUCK = 50;
 
