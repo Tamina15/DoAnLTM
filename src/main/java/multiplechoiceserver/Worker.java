@@ -110,7 +110,7 @@ public class Worker implements Runnable {
             this.myName = "anonymos";
         } catch (IOException ex) {
             Close();
-        }finally{
+        } finally {
             Close();
         }
     }
@@ -157,7 +157,7 @@ public class Worker implements Runnable {
             // Thoát
             case "LogOut":
                 this.myName = "anonymos";
-                
+
                 break;
 
             // Nếu client nhấn vào một số trong trò chơi
@@ -590,6 +590,13 @@ public class Worker implements Runnable {
     public void Close() {
 //        send("bye");
         flag = false;
+        if (pair != null) {
+            if (pair.isGameStarted()) {
+                pair.CallForStop();
+            }
+            pair.RemoveClient(this);
+        }
+
         try {
             System.out.println(name + "Connection Closing..");
             if (in != null) {
