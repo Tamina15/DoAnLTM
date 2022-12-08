@@ -300,8 +300,7 @@ public class Worker implements Runnable {
             Connection con = ConnectionDB.Connect();
             Statement st = con.createStatement();
             st.execute(sql);
-//            send("updateinfosuccess");
-            send("updateinfoerror");
+            send("updateinfosuccess");
         } catch (SQLException ex) {
             checksqlerror(ex.toString());
             send("updateinfoerror");

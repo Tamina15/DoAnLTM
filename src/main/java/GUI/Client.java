@@ -74,25 +74,18 @@ public class Client {
                     String command = array[0];
                     switch (command) {
                         case "rankloaded":
-                            //synchronized (objectInput) {
                             result = (Vector<Vector<String>>) objectInput.readObject();
-                            //}
                             STATISTIC.loadRankingTable(result);
                             break;
                         case "percentloaded":
-                            //synchronized (objectInput) {
                             result = (Vector<Vector<String>>) objectInput.readObject();
-                            //}
                             STATISTIC.loadWinPercentTable(result);
                             break;
                         case "searchloaded":
-                            //synchronized (objectInput) {
                             result = (Vector<Vector<String>>) objectInput.readObject();
-                            //}
                             STATISTIC.loadCheckSTTTable(result);
                             break;
                         case "searcherror":
-                            //result = (Vector<Vector<String>>)objectInput.readObject();
                             STATISTIC.searchFail();
                             break;
                         // Nếu login thành công
@@ -268,10 +261,8 @@ public class Client {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-// Điều chỉnh lại giùm t , 
 
-    public int editInfo(String name, String gender, String DoB, char[] passwd) {
-        int result = 0;
+    public void editInfo(String name, String gender, String DoB, char[] passwd) {
         StringBuilder sb = new StringBuilder();
         sb.append(passwd);
         String pass;
@@ -283,14 +274,9 @@ public class Client {
             }
             String input = name + "]:$:[" + gender + "]:$:[" + DoB + "]:$:[" + pass;
             send("editInfo", input);
-            String kq = receive();
-            if (kq.equals("success")) {
-                result = 1;
-            }
-        } catch (NoSuchAlgorithmException | IOException ex) {
+        } catch (NoSuchAlgorithmException ex) {
             Logger.getLogger(Client.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return result;
     }
 
     public void getInfoOfUser() throws IOException {
@@ -384,7 +370,8 @@ public class Client {
         HOME.setVisible(true);
 
     }
-public static void call() {
+
+    public static void call() {
         JOptionPane.showMessageDialog(null, "Edit successfully.", "Information", JOptionPane.ERROR_MESSAGE);
     }
 }

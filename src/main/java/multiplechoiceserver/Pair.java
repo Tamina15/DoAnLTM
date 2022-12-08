@@ -230,7 +230,7 @@ public class Pair {
 //        Server.workerMap.remove(player2.getId());
         player1.setPair(null);
         player2.setPair(null);
-        SERVER.pairList.remove(this);
+        Server.pairList.remove(this);
     }
 
     // Get Set
