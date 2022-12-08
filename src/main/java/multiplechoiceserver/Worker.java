@@ -246,7 +246,7 @@ public class Worker implements Runnable {
                                 try {
                                     String date = dob.substring(0, 10);
                                     String sql1 = "insert into user values('" + name + "','" + pass + "','" + email
-                                            + "','" + tmp + "','" + gender + "','" + date + "')";
+                                            + "','" + 0 + "','" + gender + "','" + date + "')";
                                     st = con.createStatement();
                                     st.execute(sql1);
                                     flag1 = true;

@@ -96,13 +96,17 @@ public class Client {
                         case "loginfail":
                             LOGIN_FORM.LoginFail();
                             break;
-                        // Nếu đăng ký thất bại, email không đúng
+                        // Nếu email không đúng
                         case "emailkhonghople":
                             REGISTER_FORM.EmailKhongHopLe();
                             break;
-                        // Nếu đăng ký thành công
-                        case "signupsuccess":
+                        // Nếu email hợp lệ
+                        case "emailhople":
                             REGISTER_FORM.EmailHopLe();
+                            break;
+                            // nếu mã OTP đúng
+                        case "signupsuccess":
+                        	OTP_FORM.OTPhopLe();
                             break;
                         // Nếu sql lỗi trong khi đăng ký
                         case "signupfail":
@@ -236,18 +240,8 @@ public class Client {
         }
     }
 
-    public int sendOTP(String otp) throws IOException {
-        sendOnlyCmd(otp);
-        String kq = receive();
-        if (kq.equals("signupsuccess")) {
-            return 1; 			// thanh cong 
-        } else if (kq.equals("otpsai")) {
-            return 0;			// otp sai
-        } else if (kq.equals("otphethan")) {
-            return -1;
-        } else {
-            return -2;
-        }
+    public void sendOTP(String otp) {
+        sendOnlyCmd(otp);      
     }
 
     public void signup(String email, char[] passwd, String name, String gender, String DoB) {

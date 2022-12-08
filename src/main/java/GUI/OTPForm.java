@@ -1,5 +1,6 @@
 package GUI;
 
+import static Utils.Class.*;
 import javax.swing.JTextField;
 import java.awt.BorderLayout;
 import javax.swing.JLabel;
@@ -88,23 +89,7 @@ public class OTPForm extends JFrame {
         btnXacNhan.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                int kq;
-                try {
-                    kq = cl.sendOTP(String.valueOf(txtOTP.getText()));
-                    if (kq == 1) {
-                        JOptionPane.showMessageDialog(contentPane, "Signup successfully.", "Information",
-                                JOptionPane.INFORMATION_MESSAGE);
-                        CloseThisFrame();
-                        new RegisterForm(cl).dispose();
-                        new LoginForm(cl).setVisible(true);
-                    } else {
-                        JOptionPane.showMessageDialog(contentPane, "Something wrong!! Please try later", "Error",
-                                JOptionPane.ERROR_MESSAGE);
-                    }
-                } catch (IOException e1) {
-                    // TODO Auto-generated catch block
-                    e1.printStackTrace();
-                }
+                cl.sendOTP(String.valueOf(txtOTP.getText()));
             }
         });
         contentPane.add(btnXacNhan);
@@ -133,5 +118,11 @@ public class OTPForm extends JFrame {
     public void TimeoutOTP() {
         JOptionPane.showMessageDialog(contentPane, "OTP code was expired! Please try again!", "Error",JOptionPane.ERROR_MESSAGE);
         CloseThisFrame();
+    }
+    
+    public void OTPhopLe() {
+    	LOGIN_FORM = new LoginForm(cl);
+    	LOGIN_FORM.setVisible(true);
+    	CloseThisFrame();
     }
 }
