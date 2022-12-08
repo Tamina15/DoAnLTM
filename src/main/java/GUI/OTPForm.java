@@ -131,8 +131,7 @@ public class OTPForm extends JFrame {
     }
 
     public void TimeoutOTP() {
-        JOptionPane.showMessageDialog(contentPane, "OTP code was expired! Please try again!", "Error",
-                JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(contentPane, "OTP code was expired! Please try again!", "Error",JOptionPane.ERROR_MESSAGE);
         CloseThisFrame();
     }
 }
