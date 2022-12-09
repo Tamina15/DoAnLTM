@@ -32,31 +32,31 @@ public class OTPForm extends JFrame {
     DecimalFormat dFormat = new DecimalFormat("00");
     private JLabel lblTime;
 
-    public void countdownTimer() {
-        timer = new Timer(1000, new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-
-                second--;
-                ddSecond = dFormat.format(second);
-                ddMinute = dFormat.format(minute);
-                lblTime.setText(ddMinute + ":" + ddSecond);
-
-                if (second == -1) {
-                    second = 59;
-                    minute--;
-                    ddSecond = dFormat.format(second);
-                    ddMinute = dFormat.format(minute);
-                    lblTime.setText(ddMinute + ":" + ddSecond);
-                }
-
-                if (minute == 0 && second == 0) {
-                    timer.stop();
-                }
-            }
-        });
-    }
+//    public void countdownTimer() {
+//        timer = new Timer(1000, new ActionListener() {
+//
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//
+//                second--;
+//                ddSecond = dFormat.format(second);
+//                ddMinute = dFormat.format(minute);
+//                lblTime.setText(ddMinute + ":" + ddSecond);
+//
+//                if (second == -1) {
+//                    second = 59;
+//                    minute--;
+//                    ddSecond = dFormat.format(second);
+//                    ddMinute = dFormat.format(minute);
+//                    lblTime.setText(ddMinute + ":" + ddSecond);
+//                }
+//
+//                if (minute == 0 && second == 0) {
+//                    timer.stop();
+//                }
+//            }
+//        });
+//    }
 
     public OTPForm(Client cl) {
         this.cl = cl;

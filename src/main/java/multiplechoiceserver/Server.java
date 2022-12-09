@@ -83,11 +83,11 @@ public class Server {
     public static void JoinAPair(Worker w) {
         for (Pair p : pairList) {
             if (!p.isFull()) {
-                pair.AddClient(w);
+                p.AddClient(w);
                 if (p.isFull()) {
                     p.setIsFull(true);
                 }
-                w.setPair(pair);
+                w.setPair(p);
                 return;
             }
         }
