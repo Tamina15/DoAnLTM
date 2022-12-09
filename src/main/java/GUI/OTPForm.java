@@ -89,7 +89,7 @@ public class OTPForm extends JFrame {
         btnXacNhan.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                cl.sendOTP(String.valueOf(txtOTP.getText()));
+                cl.send("OTP",String.valueOf(txtOTP.getText()));
             }
         });
         contentPane.add(btnXacNhan);

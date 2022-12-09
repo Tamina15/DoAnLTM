@@ -132,6 +132,9 @@ public class Worker implements Runnable {
             case "signup":
                 CheckSignUp(mang[1], mang[2], mang[3], mang[4], mang[5]);
                 break;
+            case "OTP":
+                CheckOTP(mang[1]);
+                break;
             // Tải thông tin user
             case "UserInfo":
                 UserInfo();
@@ -218,8 +221,11 @@ public class Worker implements Runnable {
             send("loginfail]:$:[wrong username or pass");
         }
     }
-
+    private long timeEnd;
+    String OTP;
+    String[] user = new String[5];
 //kiểm tra đăng kí
+
     public void CheckSignUp(String email, String pass, String name, String gender, String dob) {
         try {
             Connection con = ConnectionDB.Connect();
@@ -229,48 +235,44 @@ public class Worker implements Runnable {
             if (rs.next()) {
                 send("emailkhonghople");
             } else {
+                user[0] = email;
+                user[1] = pass;
+                user[2] = name;
+                user[3] = gender;
+                user[4] = dob;
                 send("emailhople");
-                String otp = createOTP(6);
-                SendEmail(email, "OTP là: " + otp);
+                OTP = createOTP(6);
+                SendEmail(email, "OTP là: " + OTP);
                 long start = System.currentTimeMillis();
-                long end = start + 10 * 60000;
-                boolean flag1 = false;
-                while (!flag1) {
-                    String tmp;
-                    try {
-                        tmp = in.readLine();
-                        if (System.currentTimeMillis() > end) {
-                            send("otphethan");
-                            flag1 = true;
-                        } else {
-                            if (tmp.equals(otp)) {
-                                try {
-                                    String date = dob.substring(0, 10);
-                                    String sql1 = "insert into user values('" + name + "','" + pass + "','" + email
-                                            + "','" + 0 + "','" + gender + "','" + date + "')";
-                                    st = con.createStatement();
-                                    st.execute(sql1);
-                                    flag1 = true;
-                                    send("signupsuccess");
-                                } catch (SQLException ex1) {
-                                    checksqlerror(ex1.toString());
-                                    send("error");
-                                }
-                            }
-                        }
-                    } catch (IOException e) {
-                        send("otpsai");
-                        e.printStackTrace();
-
-                    }
-                }
+                timeEnd = start + 10 * 60000;
             }
         } catch (SQLException ex) {
             send("signupfail");
         }
     }
 
+    public void CheckOTP(String o) {
+        if (System.currentTimeMillis() > timeEnd) {
+            send("otphethan");
+            return;
+        }
+        if (OTP.equals(o)) {
+            try {
+                String date = user[4].substring(0, 10);
+                String sql1 = "insert into user values('" + user[2] + "','" + user[1] + "','" + user[0]
+                        + "','" + 0 + "','" + user[3] + "','" + date + "')";
+                Connection con = ConnectionDB.Connect();
+                Statement st = con.createStatement();
+                st.execute(sql1);
+                send("signupsuccess");
+            } catch (SQLException ex1) {
+                checksqlerror(ex1.toString());
+                send("signupfail");
+            }
+        }
+    }
 ////gửi thông tin người đăng nhập
+
     public void UserInfo() {
         try {
             String sql = "select * from user where Email like '" + this.myName + "'";
