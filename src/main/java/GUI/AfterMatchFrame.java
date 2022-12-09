@@ -170,12 +170,14 @@ class AfterMatchPanel extends JPanel {
     }
 
     private void btnPlayAgainMouseClicked(java.awt.event.MouseEvent evt) {
-    	HOME_SELECTION  = new HomeSelection(client);
+        HOME_SELECTION = new HomeSelection(client);
         HOME_SELECTION.setVisible(true);
         frame.dispose();
     }
 
     private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {
+        client.sendOnlyCmd("LogOut");
+        HomeSelection.status = 0;
         HOME = new Home(client);
         HOME.setVisible(true);
         frame.dispose();

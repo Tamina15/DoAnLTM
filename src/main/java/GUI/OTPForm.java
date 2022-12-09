@@ -96,7 +96,7 @@ public class OTPForm extends JFrame {
 
         JButton btnHuy = new JButton("Hủy");
         btnHuy.setBounds(10, 149, 89, 23);
-        btnXacNhan.addMouseListener(new MouseAdapter() {
+        btnHuy.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 CloseThisFrame();
@@ -124,6 +124,9 @@ public class OTPForm extends JFrame {
     public void OTPhopLe() {
     	LOGIN_FORM = new LoginForm(cl);
     	LOGIN_FORM.setVisible(true);
-    	CloseThisFrame();
+        this.setVisible(false);
+        this.setEnabled(false);
+        this.dispose();
+        REGISTER_FORM.setVisible(false);
     }
 }

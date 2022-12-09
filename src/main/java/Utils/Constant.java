@@ -20,7 +20,7 @@ public class Constant {
     public static int LUCK = 50;
 
     public static final int PORT = 10000;
-    public static final String ADDRESS = "localhost";
+    public static final String ADDRESS = "192.168.31.177";
 
     public static boolean COMPLETE = false;
 

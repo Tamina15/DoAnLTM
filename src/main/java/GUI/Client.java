@@ -284,44 +284,24 @@ public class Client {
     public void getTable() {
         sendOnlyCmd("Statistic");
         try {
-            Thread.sleep(10);
+            Thread.sleep(500);
         } catch (Exception e) {
             System.out.println("Thread  interrupted.");
         }
     }
 
     public void getPTable() {
-        sendOnlyCmd("PercentRank");
         try {
-            Thread.sleep(10);
+            Thread.sleep(500);
         } catch (Exception e) {
             System.out.println("Thread  interrupted.");
         }
+        sendOnlyCmd("PercentRank");
     }
 
     public void getSearch(String key) {
         send("SearchRank", key);
     }
-//    public Vector<Vector<String>> getRankingTable() throws IOException, ClassNotFoundException {
-//        sendOnlyCmd("Statistic");
-//        Vector<Vector<String>> result = new Vector<Vector<String>>();
-//        result = (Vector<Vector<String>>) objectInput.readObject();
-//        return result;
-//    }
-//
-//    public Vector<Vector<String>> getPercentRankingTable() throws IOException, ClassNotFoundException {
-//        sendOnlyCmd("PercentRank");
-//        Vector<Vector<String>> result = new Vector<Vector<String>>();
-//        result = (Vector<Vector<String>>) objectInput.readObject();
-//        return result;
-//    }
-//
-//    public Vector<Vector<String>> getSearchRank(String key) throws IOException, ClassNotFoundException {
-//        send("SearchRank", key);
-//        Vector<Vector<String>> result = new Vector<Vector<String>>();
-//        result = (Vector<Vector<String>>) objectInput.readObject();
-//        return result;
-//    }
 
     public String hashPasswordMD5(String pass) throws NoSuchAlgorithmException {
         MessageDigest md = MessageDigest.getInstance("MD5");

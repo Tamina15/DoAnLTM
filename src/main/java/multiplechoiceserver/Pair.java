@@ -63,10 +63,14 @@ public class Pair {
     }
 
     public void RemoveClient(Worker t) {
-        if (player1.getId() == t.getId()) {
-            player1 = null;
-        } else if (player2.getId() == t.getId()) {
-            player2 = null;
+        if (player1 != null) {
+            if (player1.getId() == t.getId()) {
+                player1 = null;
+            } else if (player2 != null) {
+                if (player2.getId() == t.getId()) {
+                    player2 = null;
+                }
+            }
         }
         isFull = false;
         isGameStarted = false;
@@ -88,7 +92,9 @@ public class Pair {
             // gửi số đầu tiên
             NextNumber();
             // bộ đếm thời gian
+            matchTime = Server.MatchLength;
             Thread timer = new Thread() {
+
                 @Override
                 public void run() {
                     double drawInterval = 1000000000;
@@ -338,8 +344,12 @@ public class Pair {
     public void Stop() {
         isGameStarted = false;
         isFull = false;
-        player1.setPair(null);
-        player2.setPair(null);
+        if (player1 != null) {
+            player1.setPair(null);
+        }
+        if (player2 != null) {
+            player2.setPair(null);
+        }
         Server.pairList.remove(this);
     }
 

@@ -470,7 +470,7 @@ public class Worker implements Runnable {
         } else {
             send("searchloaded");
             try {
-                Thread.sleep(10);
+                Thread.sleep(500);
             } catch (Exception e) {
                 System.out.println("Thread  interrupted.");
             }
