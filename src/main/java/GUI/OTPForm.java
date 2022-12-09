@@ -109,6 +109,7 @@ public class OTPForm extends JFrame {
         this.setVisible(false);
         this.setEnabled(false);
         this.dispose();
+        REGISTER_FORM.setVisible(true);
     }
 
     public void WrongOTP() {

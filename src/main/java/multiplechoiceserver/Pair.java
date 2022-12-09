@@ -117,6 +117,7 @@ public class Pair {
     }
 
     private void RandomizeArray() {
+        array = new int[Server.Amount];
         currentIndex = 0;
         Checked_Num = 0;
         for (int i = 0; i < array.length; i++) {

@@ -296,14 +296,14 @@ public class RegisterForm extends JFrame {
     public void EmailHopLe() {
     	OTP_FORM= new OTPForm(client);
     	OTP_FORM.setVisible(true);
+        this.setVisible(false);
 //        HOME_SELECTION = new HomeSelection(client);
 //        HOME_SELECTION.setVisible(true);
 //        HOME_SELECTION.setEnabled(true);
-        closeThisWindow();
+//        closeThisWindow();
     }
 
     public void EmailKhongHopLe() {
-        Client.call();
         JOptionPane.showMessageDialog(contentPane, "Email đã có người đăng ký. Mời bạn nhập email khác", "Error Message", JOptionPane.ERROR_MESSAGE);
     }
 
