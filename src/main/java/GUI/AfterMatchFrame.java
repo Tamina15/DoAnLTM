@@ -176,7 +176,9 @@ class AfterMatchPanel extends JPanel {
     }
 
     private void btnExitMouseClicked(java.awt.event.MouseEvent evt) {
-        HOME = new Home(client);
+    	client.sendOnlyCmd("LogOut"); // TODO Auto-generated catch block
+        HomeSelection.status = 0;
+    	HOME = new Home(client);
         HOME.setVisible(true);
         frame.dispose();
     }

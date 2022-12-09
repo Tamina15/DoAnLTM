@@ -99,18 +99,15 @@ public class OTPForm extends JFrame {
         btnHuy.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                CloseThisFrame();
+            	 OTP_FORM.setVisible(false);
+            	 OTP_FORM.setEnabled(false);
+            	 OTP_FORM.dispose();
             }
         });
         contentPane.add(btnHuy);
     }
 
-    public void CloseThisFrame() {
-        this.setVisible(false);
-        this.setEnabled(false);
-        this.dispose();
-        REGISTER_FORM.setVisible(true);
-    }
+
 
     public void WrongOTP() {
         JOptionPane.showMessageDialog(contentPane, "Wrong OTP! Please try again!", "Error", JOptionPane.ERROR_MESSAGE);
@@ -118,13 +115,17 @@ public class OTPForm extends JFrame {
 
     public void TimeoutOTP() {
         JOptionPane.showMessageDialog(contentPane, "OTP code was expired! Please try again!", "Error",JOptionPane.ERROR_MESSAGE);
-        CloseThisFrame();
+        this.setVisible(false);
+        this.setEnabled(false);
+        this.dispose();
     }
     
     public void OTPhopLe() {
-    	REGISTER_FORM.dispose();
+    	REGISTER_FORM.setVisible(false);
     	LOGIN_FORM = new LoginForm(cl);
     	LOGIN_FORM.setVisible(true);
-    	CloseThisFrame();
+    	 this.setVisible(false);
+         this.setEnabled(false);
+         this.dispose();
     }
 }
