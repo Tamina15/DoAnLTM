@@ -269,6 +269,8 @@ public class Worker implements Runnable {
                 checksqlerror(ex1.toString());
                 send("signupfail");
             }
+        } else {
+            send("otpsai");
         }
     }
 ////gửi thông tin người đăng nhập
