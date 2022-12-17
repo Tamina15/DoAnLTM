@@ -377,12 +377,6 @@ public class Worker implements Runnable {
         return input;
     }
 
-//kiểm tra đã đủ số lượng người
-//số ưu tiên	
-//    public static int getNumberPriority() {
-//        Random r = new Random(99);
-//        return r.nextInt() + 1;
-//    }
 //tổng số trận thắng của người chơi
     public int getSumWinerbyUser() throws SQLException {
         String sql = "select count(Winner) as sum from game where Winner like '" + this.myName + "'";
