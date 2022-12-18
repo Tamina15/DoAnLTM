@@ -91,7 +91,9 @@ public class PointPanel extends JPanel {
         number.setFont(font);
         number.setBackground(background);
 
+        player1.setFont(font);
         player1.setText("Player 1: ");
+        player2.setFont(font);
         player2.setText("Player 2: ");
         this.add(btnReturn);
         this.add(powerUp);

@@ -33,9 +33,10 @@ public class mainFrame extends JFrame implements Runnable {
 
     public static int blackoutTime;
     public static int amount;
-    mainFrame() {
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    mainFrame() {
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+
         c = this.getContentPane();
 
         ready = false;
@@ -61,7 +62,8 @@ public class mainFrame extends JFrame implements Runnable {
     mainFrame(Client client) {
         this.client = client;
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+        this.setUndecorated(false);
         c = this.getContentPane();
 
         ready = false;

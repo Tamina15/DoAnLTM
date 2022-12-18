@@ -320,11 +320,11 @@ public class Client {
             System.out.println("Connection Closing..");
             if (scanner != null) {
                 scanner.close();
-                System.out.println(" Scanner Closed");
+                System.out.println("Scanner Closed");
             }
             if (in != null) {
                 in.close();
-                System.out.println(" Socket Input Stream Closed");
+                System.out.println("Socket Input Stream Closed");
             }
 
             if (out != null) {

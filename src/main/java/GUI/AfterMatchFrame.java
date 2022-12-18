@@ -22,7 +22,7 @@ public class AfterMatchFrame extends JFrame {
         System.out.println("Result2 = " + result);
         this.afterMatch = new AfterMatchPanel(client, this);
 
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.add(afterMatch);
         //this.setBackground(Color.yellow);
         this.pack();
