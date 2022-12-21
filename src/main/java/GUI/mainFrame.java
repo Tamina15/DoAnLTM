@@ -17,9 +17,9 @@ public class mainFrame extends JFrame implements Runnable {
     GamePanel gamePanel;
     public PointPanel pointPanel;
     Thread thread;
-    public static String FPScount = "NaN";
+    public String FPScount = "NaN";
 
-    public static double delta = 0;
+    public double delta = 0;
 
     public boolean ready;
 
@@ -38,7 +38,7 @@ public class mainFrame extends JFrame implements Runnable {
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 
         c = this.getContentPane();
-
+        delta = 0;
         ready = false;
 
         //gamePanel = new GamePanel();
@@ -65,7 +65,7 @@ public class mainFrame extends JFrame implements Runnable {
         this.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         this.setUndecorated(false);
         c = this.getContentPane();
-
+        delta = 0;
         ready = false;
 
         //gamePanel = new GamePanel();
@@ -92,6 +92,7 @@ public class mainFrame extends JFrame implements Runnable {
 
     @Override
     public void run() {
+        delta = 0;
         double drawInterval = 1000000000 / FPS;
         long timer = 0;
         int count = 0;

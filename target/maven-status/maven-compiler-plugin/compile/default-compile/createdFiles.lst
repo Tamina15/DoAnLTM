@@ -23,7 +23,6 @@ multiplechoiceserver\Pair.class
 multiplechoiceserver\ConnectionDB.class
 GUI\AfterMatchFrame.class
 GUI\EditInforForm$1.class
-multiplechoiceserver\Worker.class
 GUI\Statistic$5.class
 GUI\Statistic$2.class
 GUI\Home$3.class

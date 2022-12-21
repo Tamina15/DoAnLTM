@@ -99,7 +99,12 @@ public class GamePanel extends JPanel {
         }
         
         arc = (arc + 1) % 20;
-        
+        g2.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        g2.setColor(Color.green);
+
+        g2.drawString(MAIN_FRAME.FPScount, 0, TILE_SIZE / 2);
+
+        g2.drawString("" + MAIN_FRAME.delta, TILE_SIZE, TILE_SIZE / 2);
         g2.dispose();
     }
     

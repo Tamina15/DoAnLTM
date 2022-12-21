@@ -46,6 +46,11 @@ public class Client {
     }
 
     public Client(String address, int port) {
+        System.out.println("Use email: admin@gmail.com, password: admin");
+        System.out.println("Use email: user@gmail.com, password: user");
+        System.out.println("For login without database");
+        System.out.println("Warning: No mySQL Database connnected may cause error");
+        System.out.println("For database, see libs folder");
         try {
             socket = new Socket(address, port);
             System.out.println("Da ket noi");
